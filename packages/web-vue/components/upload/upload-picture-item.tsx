@@ -41,7 +41,7 @@ export default defineComponent({
         <>
           {uploadCtx?.slots.image?.({ fileItem: props.file }) ?? (
             <img
-              src={props.file.url}
+              src={props.file.thumbnail || props.file.url}
               alt={props.file.name}
               {...(uploadCtx?.imageLoading
                 ? { loading: uploadCtx.imageLoading }

@@ -299,14 +299,18 @@ export default defineComponent({
       })
     );
 
-    const handleResize = (entry: HTMLElement) => {
+    const handleResize = (entry: ResizeObserverEntry) => {
       handleWrapperResize(entry);
       emit('resize', entry);
     };
 
-    const handleWrapperResize = (entry: HTMLElement) => {
+    const handleWrapperResize = (entry: ResizeObserverEntry) => {
       if (needMeasureViewportHeight.value) {
-        setViewportHeight(entry.clientHeight);
+        // ResizeObserver emits a ResizeObserverEntry rather than the observed
+        // element. Using `entry.clientHeight` leaves the viewport height as
+        // `undefined` for CSS heights (for example, `100%`), which makes the
+        // virtual list fall back to an invalid max-height.
+        setViewportHeight(entry.contentRect.height);
       }
     };
 

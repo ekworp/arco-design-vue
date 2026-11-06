@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, ref } from 'vue';
+import { computed, defineComponent, onUnmounted, PropType, ref } from 'vue';
 import { getPrefixCls } from '../_utils/global-config';
 import Tooltip from '../tooltip';
 import { off, on } from '../_utils/dom';
@@ -100,10 +100,20 @@ export default defineComponent({
     const handleMouseUp = () => {
       isDragging.value = false;
       off(window, 'mousemove', handleMouseMove);
+      off(window, 'touchmove', handleMouseMove);
       off(window, 'mouseup', handleMouseUp);
+      off(window, 'contextmenu', handleMouseUp);
       off(window, 'touchend', handleMouseUp);
       emit('moveend');
     };
+
+    onUnmounted(() => {
+      off(window, 'mousemove', handleMouseMove);
+      off(window, 'touchmove', handleMouseMove);
+      off(window, 'mouseup', handleMouseUp);
+      off(window, 'contextmenu', handleMouseUp);
+      off(window, 'touchend', handleMouseUp);
+    });
 
     const cls = computed(() => [prefixCls]);
 

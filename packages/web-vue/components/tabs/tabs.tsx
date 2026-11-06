@@ -7,6 +7,8 @@ import {
   reactive,
   ref,
   toRefs,
+  inject,
+  onMounted,
 } from 'vue';
 import type { Direction, Size } from '../_utils/constant';
 import type {
@@ -14,6 +16,7 @@ import type {
   TabsType,
   TabData,
   TabTriggerEvent,
+  ScrollPosition,
 } from './interface';
 import { getPrefixCls } from '../_utils/global-config';
 import TabsNav from './tabs-nav';
@@ -21,6 +24,7 @@ import { tabsInjectionKey } from './context';
 import { isUndefined } from '../_utils/is';
 import { useSize } from '../_hooks/use-size';
 import { useChildrenComponents } from '../_hooks/use-children-components';
+import { configProviderInjectionKey } from '../config-provider/context';
 
 export default defineComponent({
   name: 'Tabs',
@@ -163,6 +167,15 @@ export default defineComponent({
       type: String as PropType<TabTriggerEvent>,
       default: 'click',
     },
+    /**
+     * @zh 被选中 tab 的滚动位置，默认 auto 即会将 activeTab 滚动到可见区域，但不会特意做位置调整
+     * @en The scroll position of the selected tab, the default auto will scroll the activeTab to the visible area, but will not adjust the position intentionally
+     * @values 'start', 'end', 'center', 'auto', number
+     */
+    scrollPosition: {
+      type: [String, Number] as PropType<ScrollPosition>,
+      default: 'auto',
+    },
   },
   emits: {
     'update:activeKey': (key: string | number) => true,
@@ -285,6 +298,9 @@ export default defineComponent({
       emit('delete', key, ev);
     };
 
+    const configCtx = inject(configProviderInjectionKey, undefined);
+    const rtl = computed(() => configCtx?.rtl ?? false);
+
     const renderContent = () => {
       return (
         <div
@@ -302,7 +318,11 @@ export default defineComponent({
                 [`${prefixCls}-content-animation`]: props.animation,
               },
             ]}
-            style={{ marginLeft: `-${activeIndex.value * 100}%` }}
+            style={
+              rtl.value
+                ? { marginRight: `-${activeIndex.value * 100}%` }
+                : { marginLeft: `-${activeIndex.value * 100}%` }
+            }
           >
             {children.value}
           </div>
@@ -318,6 +338,7 @@ export default defineComponent({
       `${prefixCls}-size-${mergedSize.value}`,
       {
         [`${prefixCls}-justify`]: props.justify,
+        [`${prefixCls}-rtl`]: rtl.value,
       },
     ]);
 
@@ -338,6 +359,7 @@ export default defineComponent({
             animation={props.animation}
             showAddButton={props.showAddButton}
             headerPadding={props.headerPadding}
+            scrollPosition={props.scrollPosition}
             size={mergedSize.value}
             type={props.type}
             onClick={handleClick}

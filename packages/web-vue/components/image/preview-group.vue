@@ -129,19 +129,21 @@ export default defineComponent({
      * @en Set the mount point of the pop-up box, the same as the `to` of `teleport`, the default value is document.body
      */
     popupContainer: {
-      type: [Object, String] as PropType<HTMLElement | string>,
+      type: [String, Object] as PropType<string | HTMLElement>,
     },
   },
   emits: [
     /**
      * @zh 切换图片
      * @en Image switch
+     * @param {number} index
      */
     'change',
     'update:current',
     /**
      * @zh 预览的打开和关闭
      * @en Preview visibility change
+     * @param {boolean} visible
      */
     'visible-change',
     'update:visible',

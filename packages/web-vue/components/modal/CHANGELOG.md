@@ -2,6 +2,24 @@
 changelog: true
 ```
 
+## 2.59.0
+
+`2026-10-20`
+
+### 🆕 Feature
+
+- Add `Modal.config` and `Modal.destroyAll`, with corresponding type definitions and tests. ([#3647](https://github.com/arco-design/arco-design-vue/pull/3647))
+
+
+## 2.57.0
+
+`2025-03-10`
+
+### 💎 Enhancement
+
+- fix re-throw error in onBeforeOk for proper error handling ([#3407](https://github.com/arco-design/arco-design-vue/pull/3407))
+
+
 ## 2.54.6
 
 `2024-03-01`

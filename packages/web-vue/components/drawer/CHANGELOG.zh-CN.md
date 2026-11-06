@@ -2,6 +2,28 @@
 changelog: true
 ```
 
+## 2.58.0
+
+`2026-04-16`
+
+### 🆕 新增功能
+
+- 关闭mask,增加事件穿透 ([#3626](https://github.com/arco-design/arco-design-vue/pull/3626))
+
+
+## 2.57.0
+
+`2025-03-10`
+
+### 🆕 新增功能
+
+- 增加 bodyClass 和 bodyStyle ([#3437](https://github.com/arco-design/arco-design-vue/pull/3437))
+
+### 💎 功能优化
+
+- 修复执行 onBeforeOk  时错误未传播的问题 ([#3407](https://github.com/arco-design/arco-design-vue/pull/3407))
+
+
 ## 2.45.3
 
 `2023-04-28`

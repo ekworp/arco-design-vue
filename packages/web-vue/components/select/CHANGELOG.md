@@ -2,6 +2,24 @@
 changelog: true
 ```
 
+## 2.56.2
+
+`2024-09-13`
+
+### 🐛 BugFix
+
+- fix(switch): loading state can't be controlled with truthy initial state ([#3285](https://github.com/arco-design/arco-design-vue/pull/3285))
+
+
+## 2.56.1
+
+`2024-08-22`
+
+### 🆕 Feature
+
+- add `tagNowrap` prop ([#3270](https://github.com/arco-design/arco-design-vue/pull/3270))
+
+
 ## 2.54.2
 
 `2024-01-11`

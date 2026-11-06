@@ -36,6 +36,7 @@ description: 页面上的命令过多时，可将备选命令收纳到向下展�
 |trigger|触发方式|`'hover' \| 'click' \| 'focus' \| 'contextMenu'`|`'click'`||
 |position|弹出位置|`'top' \| 'tl' \| 'tr' \| 'bottom' \| 'bl' \| 'br'`|`'bottom'`||
 |popup-container|弹出框的挂载容器|`string \| HTMLElement`|`-`||
+|popup-max-height|弹出框最大高度|`boolean\|number`|`true`|2.29.0|
 |hide-on-select|是否在用户选择后隐藏弹出框|`boolean`|`true`|2.43.0|
 ### `<dropdown>` Events
 
@@ -122,7 +123,7 @@ description: 页面上的命令过多时，可将备选命令收纳到向下展�
 |default-popup-visible|弹出框默认是否可见（非受控模式）|`boolean`|`false`|
 |trigger|触发方式|`'hover' \| 'click' \| 'focus' \| 'contextMenu'`|`'click'`|
 |position|弹出位置|`'top' \| 'tl' \| 'tr' \| 'bottom' \| 'bl' \| 'br'`|`'br'`|
-|popup-container|弹出框的挂载容器|`string \| HTMLElement \| null \| undefined`|`-`|
+|popup-container|弹出框的挂载容器|`string \| HTMLElement`|`-`|
 |disabled|是否禁用|`boolean`|`false`|
 |type|按钮类型|`string`|`-`|
 |size|按钮大小|`string`|`-`|

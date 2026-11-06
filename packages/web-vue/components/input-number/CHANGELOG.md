@@ -2,6 +2,24 @@
 changelog: true
 ```
 
+## 2.56.3
+
+`2024-10-25`
+
+### 🐛 BugFix
+
+- fix readonly not working in button mode ([#3314](https://github.com/arco-design/arco-design-vue/pull/3314))
+
+
+## 2.56.0
+
+`2024-07-26`
+
+### 🆕 Feature
+
+- Added 'keydown' event to disable default behavior ([#3248](https://github.com/arco-design/arco-design-vue/pull/3248))
+
+
 ## 2.54.6
 
 `2024-03-01`

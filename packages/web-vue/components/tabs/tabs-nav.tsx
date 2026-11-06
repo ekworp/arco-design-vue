@@ -1,25 +1,28 @@
 import {
-  ComponentPublicInstance,
   computed,
   defineComponent,
   nextTick,
   onMounted,
+  onUnmounted,
   PropType,
   ref,
   toRefs,
   watch,
+  inject,
 } from 'vue';
-import { getTabListStyle } from './utils';
+import { updateScrollOffset } from './utils';
 import { getPrefixCls } from '../_utils/global-config';
 import type { Direction } from '../_utils/constant';
 import TabsTab from './tabs-tab.vue';
 import TabsButton from './tabs-button';
 import TabsNavInk from './tabs-nav-ink.vue';
-import type { TabData, TabsType } from './interface';
+import type { TabData, TabsType, ScrollPosition } from './interface';
 import IconHover from '../_components/icon-hover.vue';
 import IconPlus from '../icon/icon-plus';
 import ResizeObserver from '../_components/resize-observer';
-import { isUndefined } from '../_utils/is';
+import { isUndefined, isNumber } from '../_utils/is';
+import { off, on } from '../_utils/dom';
+import { configProviderInjectionKey } from '../config-provider/context';
 
 export default defineComponent({
   name: 'TabsNav',
@@ -67,11 +70,18 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
+    scrollPosition: {
+      type: String as PropType<ScrollPosition>,
+      default: 'auto',
+    },
   },
   emits: ['click', 'add', 'delete'],
   setup(props, { emit, slots }) {
-    const { tabs, activeKey, activeIndex, direction } = toRefs(props);
+    const { tabs, activeKey, activeIndex, direction, scrollPosition } =
+      toRefs(props);
     const prefixCls = getPrefixCls('tabs-nav');
+    const configCtx = inject(configProviderInjectionKey, undefined);
+    const rtl = computed(() => configCtx?.rtl ?? false);
 
     const wrapperRef = ref<HTMLElement>();
     const listRef = ref<HTMLElement>();
@@ -82,7 +92,10 @@ export default defineComponent({
       }
       return undefined;
     });
-    const inkRef = ref<ComponentPublicInstance>();
+    const isRtlHorizontal = computed(
+      () => rtl.value && direction.value === 'horizontal'
+    );
+    const inkRef = ref<InstanceType<typeof TabsNavInk>>();
 
     const mergedEditable = computed(
       () =>
@@ -91,7 +104,6 @@ export default defineComponent({
     const isScroll = ref(false);
     const wrapperLength = ref(0);
     const maxOffset = ref(0);
-    const tabEndOffsets = ref<number[]>([]);
     const offset = ref(0);
 
     const getWrapperLength = () => {
@@ -113,22 +125,11 @@ export default defineComponent({
       return listRef.value.offsetWidth - wrapperRef.value.offsetWidth;
     };
 
-    const getTabEndOffsets = () => {
-      return tabs.value.map((item) => {
-        const ele = tabsRef.value[item.key];
-        if (direction.value === 'vertical') {
-          return ele.offsetTop + ele.offsetHeight;
-        }
-        return ele.offsetLeft + ele.offsetWidth;
-      });
-    };
-
     const getSize = () => {
       isScroll.value = isOverflow();
       if (isScroll.value) {
         wrapperLength.value = getWrapperLength();
         maxOffset.value = getMaxOffset();
-        tabEndOffsets.value = getTabEndOffsets();
         if (offset.value > maxOffset.value) {
           offset.value = maxOffset.value;
         }
@@ -146,31 +147,90 @@ export default defineComponent({
       return false;
     };
 
-    const isInView = (index: number) => {
-      return (
-        (tabEndOffsets.value[index - 1] ?? 0) >= offset.value &&
-        tabEndOffsets.value[index] <= offset.value + wrapperLength.value
-      );
+    const setOffset = (newOffset: number) => {
+      if (!wrapperRef.value || !listRef.value || newOffset < 0) {
+        newOffset = 0;
+      }
+      offset.value = Math.min(newOffset, maxOffset.value);
     };
 
-    const getNextOffset = (type: string) => {
-      if (!wrapperRef.value) {
-        return 0;
+    const setActiveTabOffset = () => {
+      if (!activeTabRef.value || !wrapperRef.value || !isScroll.value) return;
+
+      // 纠正浏览器默认行为导致的滚动偏移， 比如 Tab 聚焦
+      updateScrollOffset(wrapperRef.value, direction.value);
+
+      const isHorizontal = direction.value === 'horizontal';
+      const sizeProperty = isHorizontal ? 'offsetWidth' : 'offsetHeight';
+      const wrapperSize = wrapperRef.value[sizeProperty];
+      const tabSize = activeTabRef.value[sizeProperty];
+
+      // 计算标签位置（考虑 RTL 模式）
+      let tabPosition = 0;
+      if (isRtlHorizontal.value) {
+        const listWidth = listRef.value?.offsetWidth || 0;
+        const { offsetLeft } = activeTabRef.value;
+        // 对于 RTL 模式，计算从右侧开始的位置
+        tabPosition = listWidth - offsetLeft - tabSize;
+      } else {
+        // 对于 LTR 模式或垂直方向，直接使用标准偏移
+        tabPosition = isHorizontal
+          ? activeTabRef.value.offsetLeft
+          : activeTabRef.value.offsetTop;
       }
 
-      return type === 'previous'
-        ? offset.value - wrapperLength.value
-        : offset.value + wrapperLength.value;
+      const marginSide = isHorizontal
+        ? isRtlHorizontal.value
+          ? scrollPosition.value === 'end'
+            ? 'marginLeft'
+            : 'marginRight'
+          : scrollPosition.value === 'end'
+          ? 'marginRight'
+          : 'marginLeft'
+        : scrollPosition.value === 'end'
+        ? 'marginBottom'
+        : 'marginTop';
+
+      const tabStyle = window.getComputedStyle(activeTabRef.value);
+      const tabMargin = parseFloat(tabStyle[marginSide]) || 0;
+
+      let targetOffset = 0;
+      switch (scrollPosition.value) {
+        case 'auto':
+          if (tabPosition < offset.value) {
+            targetOffset = tabPosition - tabMargin;
+          } else if (tabPosition + tabSize > offset.value + wrapperSize) {
+            targetOffset = tabPosition + tabSize - wrapperSize + tabMargin;
+          }
+          break;
+        case 'center':
+          targetOffset = tabPosition + (tabSize - wrapperSize + tabMargin) / 2;
+          break;
+        case 'start':
+          targetOffset = tabPosition - tabMargin;
+          break;
+        case 'end':
+          targetOffset = tabPosition + tabSize - wrapperSize + tabMargin;
+          break;
+        default:
+          if (isNumber(scrollPosition.value)) {
+            targetOffset = tabPosition - scrollPosition.value;
+          }
+      }
+
+      setOffset(targetOffset);
     };
 
-    const getValidOffset = (offset: number) => {
-      if (!wrapperRef.value || !listRef.value || offset < 0) {
-        return 0;
+    const handleWheel = (ev: WheelEvent) => {
+      if (!isScroll.value) return;
+      ev.preventDefault();
+
+      const { deltaX, deltaY } = ev;
+      if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        setOffset(offset.value + deltaX);
+      } else {
+        setOffset(offset.value + deltaY);
       }
-      if (offset > maxOffset.value) {
-        return maxOffset.value;
-      }
-      return offset;
     };
 
     const handleClick = (key: string | number, ev: Event) => {
@@ -179,10 +239,17 @@ export default defineComponent({
 
     const handleDelete = (key: string | number, ev: Event) => {
       emit('delete', key, ev);
+      nextTick(() => {
+        delete tabsRef.value[key];
+      });
     };
 
     const handleButtonClick = (type: string) => {
-      offset.value = getValidOffset(getNextOffset(type));
+      const scrollDirection =
+        (type === 'previous') !== isRtlHorizontal.value ? -1 : 1;
+      const nextOffset = offset.value + scrollDirection * wrapperLength.value;
+
+      setOffset(nextOffset);
     };
 
     const handleResize = () => {
@@ -198,28 +265,26 @@ export default defineComponent({
       });
     });
 
-    watch(activeIndex, (current, pre) => {
-      nextTick(() => {
-        if (isScroll.value) {
-          if (current >= pre) {
-            const offsetIndex =
-              current < tabEndOffsets.value.length - 1 ? current + 1 : current;
-            if (!isInView(offsetIndex)) {
-              offset.value =
-                tabEndOffsets.value[offsetIndex] - wrapperLength.value;
-            }
-          } else {
-            const offsetIndex = current > 0 ? current - 1 : current;
-            if (!isInView(offsetIndex)) {
-              offset.value = tabEndOffsets.value[offsetIndex - 1] ?? 0;
-            }
-          }
+    watch([activeIndex, scrollPosition, rtl], () => {
+      setTimeout(() => {
+        setActiveTabOffset();
+        if (inkRef.value) {
+          inkRef.value.getInkStyle();
         }
-      });
+      }, 0);
     });
 
     onMounted(() => {
       getSize();
+      if (wrapperRef.value) {
+        on(wrapperRef.value, 'wheel', handleWheel, { passive: false });
+      }
+    });
+
+    onUnmounted(() => {
+      if (wrapperRef.value) {
+        off(wrapperRef.value, 'wheel', handleWheel);
+      }
     });
 
     const renderAddBtn = () => {
@@ -256,13 +321,12 @@ export default defineComponent({
       },
     ]);
 
-    const listStyle = computed(() =>
-      getTabListStyle({
-        direction: props.direction,
-        type: props.type,
-        offset: offset.value,
-      })
-    );
+    const listStyle = computed(() => ({
+      transform:
+        direction.value === 'vertical'
+          ? `translateY(${-offset.value}px)`
+          : `translateX(${rtl.value ? offset.value : -offset.value}px)`,
+    }));
 
     const tabCls = computed(() => [
       `${prefixCls}-tab`,
@@ -275,7 +339,7 @@ export default defineComponent({
       <div class={cls.value}>
         {isScroll.value && (
           <TabsButton
-            type="previous"
+            type={isRtlHorizontal.value ? 'next' : 'previous'}
             direction={props.direction}
             disabled={offset.value <= 0}
             onClick={handleButtonClick}
@@ -285,7 +349,7 @@ export default defineComponent({
           <div class={tabCls.value} ref={wrapperRef}>
             <ResizeObserver onResize={handleResize}>
               <div ref={listRef} class={listCls.value} style={listStyle.value}>
-                {props.tabs.map((tab, index) => (
+                {props.tabs.map((tab) => (
                   <TabsTab
                     key={tab.key}
                     ref={(component: any) => {
@@ -318,7 +382,7 @@ export default defineComponent({
         </ResizeObserver>
         {isScroll.value && (
           <TabsButton
-            type="next"
+            type={isRtlHorizontal.value ? 'previous' : 'next'}
             direction={props.direction}
             disabled={offset.value >= maxOffset.value}
             onClick={handleButtonClick}

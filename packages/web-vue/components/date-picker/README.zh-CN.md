@@ -31,6 +31,14 @@ description: 选择日期。支持年、月、周、日类型，支持范围选�
 
 @import ./__demo__/disabled-date-advance.md
 
+@import ./__demo__/hide-not-in-view-dates.md
+
+@import ./__demo__/clear-range-on-reselect.md
+
+@import ./__demo__/utc-offset.md
+
+@import ./__demo__/timezone.md
+
 @import ./__demo__/size.md
 
 @import ./__demo__/extra.md
@@ -38,6 +46,8 @@ description: 选择日期。支持年、月、周、日类型，支持范围选�
 @import ./__demo__/disabled.md
 
 @import ./__demo__/date-render.md
+
+@import ./__demo__/panel-render.md
 
 @import ./__demo__/control.md
 
@@ -65,18 +75,23 @@ description: 选择日期。支持年、月、周、日类型，支持范围选�
 |default-popup-visible|默认弹出框是打开或者关闭|`boolean`|`false`||
 |trigger-props|可以传入 `Trigger` 组件的参数|`TriggerProps`|`-`||
 |unmount-on-close|是否在隐藏的时候销毁DOM结构|`boolean`|`false`||
+|hide-not-in-view-dates|面板隐藏不在当前时间范围的灰色日期|`boolean`|`false`||
 |placeholder|提示文案|`string`|`-`||
+|input-props|原生输入框属性|`Record<string, any>`|`-`||
 |disabled|是否禁用|`boolean`|`false`||
 |disabled-date|不可选取的日期|`(current?: Date) => boolean`|`-`||
 |disabled-time|不可选取的时间|`(current: Date) => DisabledTimeProps`|`-`||
 |picker-value **(v-model)**|面板显示的日期|`Date \| string \| number`|`-`||
 |default-picker-value|面板默认显示的日期|`Date \| string \| number`|`-`||
-|popup-container|弹出框的挂载容器|`string \| HTMLElement \| null \| undefined`|`-`||
+|popup-container|弹出框的挂载容器|`string \| HTMLElement`|`-`||
 |value-format|值的格式，对 `value` `defaultValue` `pickerValue` `defaultPickerValue` 以及事件中的返回值生效，支持设置为时间戳，Date 和字符串（参考[字符串解析格式](#字符串解析格式)）。如果没有指定，将格式化为字符串，格式同 `format`。|`'timestamp' \| 'Date' \| string`|`-`|2.16.0|
+|utc-offset|设置时区偏移，如果需要 utc 时间则设置为 0。|`number`|`-`||
+|timezone|设置时区，如果设置了 `utcOffset`，则以 `utcOffset` 为准。|`string`|`-`||
 |preview-shortcut|是否要预览快捷选择的结果|`boolean`|`true`|2.28.0|
 |show-confirm-btn|是否显示确认按钮，`showTime = true` 的时候始终显示。|`boolean`|`false`|2.29.0|
 |disabled-input|是否禁止键盘输入日期|`boolean`|`false`|2.43.0|
 |abbreviation|是否启用缩写|`boolean`|`true`|2.45.0|
+|panel-render|自定义渲染面板|`(panelNode: any) => any`|`-`||
 ### `Common` Events
 
 |事件名|描述|参数|
@@ -184,13 +199,20 @@ description: 选择日期。支持年、月、周、日类型，支持范围选�
 |value-format|值的格式，对 `value` `defaultValue` `pickerValue` `defaultPickerValue` 以及事件中的返回值生效，支持设置为时间戳，Date 和字符串（参考[字符串解析格式](#字符串解析格式)）。如果没有指定，将格式化为字符串，格式同 `format`。|`'timestamp' \| 'Date' \| string`|`-`|2.16.0|
 |show-time|是否增加时间选择|`boolean`|`false`||
 |time-picker-props|时间显示的参数，参考 [TimePickerProps](/vue/component/time-picker)|`Partial<TimePickerProps>`|`-`||
+|input-props|原生输入框属性|`Record<string, any>[]`|`[]`||
 |placeholder|提示文案|`string[]`|`-`||
 |disabled-date|不可选的日期|`(current: Date, type: 'start' \| 'end') => boolean`|`-`||
 |disabled-time|不可选取的时间|`(current: Date, type: 'start' \| 'end') => DisabledTimeProps`|`-`||
 |separator|范围选择器输入框内的分割符号|`string`|`-`||
 |exchange-time|时间是否会交换，默认情况下时间会影响和参与开始和结束值的排序，如果要固定时间顺序，可将其关闭。|`boolean`|`true`|2.25.0|
+|fixed-time|是否固定时间|`boolean`|`false`||
+|clear-range-on-reselect|当重新选择范围的时候，会清空之前的范围重新进行选择|`boolean`|`false`||
+|hide-not-in-view-dates|面板隐藏不在当前时间范围的灰色日期|`boolean`|`false`||
+|utc-offset|设置时区偏移，如果需要 utc 时间则设置为 0。|`number`|`-`||
+|timezone|设置时区，如果设置了 `utcOffset`，则以 `utcOffset` 为准。|`string`|`-`||
 |disabled-input|是否禁止键盘输入日期|`boolean`|`false`|2.43.0|
 |abbreviation|是否启用缩写|`boolean`|`true`||
+|panel-render|自定义渲染面板|`(panelNode: any) => any`|`-`||
 ### `<range-picker>` Events
 
 |事件名|描述|参数|

@@ -65,11 +65,7 @@ app.mount('#app');
 
 ## Development
 
-1. Use `npm install` to install basic packages such as `lerna` and `yarn`
-
-2. Use `yarn install` to install the dependencies of each package in `workspaces` (If you encounter a `YN0018` error, you can use `YARN_CHECKSUM_BEHAVIOR=update yarn` to install)
-
-3. Use `npm run init` to initialize the project
+Project development and contribution process please refer to the [Contributing Guide](https://github.com/arco-design/arco-design-vue/blob/main/CONTRIBUTING.md).
 
 # Useful Links
 
@@ -101,8 +97,8 @@ app.mount('#app');
 
 # Contributing
 
-Developers interested in contributing should read the [Code of Conduct](./CODE_OF_CONDUCT.md) and
-the [Contributing Guide](./CONTRIBUTING.md).
+Developers interested in contributing should read the [Code of Conduct](https://github.com/arco-design/arco-design-vue/blob/main/CODE_OF_CONDUCT.md) and
+the [Contributing Guide](https://github.com/arco-design/arco-design-vue/blob/main/CONTRIBUTING.md).
 
 Thank you to all the people who already contributed to ArcoDesign!
 
@@ -110,4 +106,4 @@ Thank you to all the people who already contributed to ArcoDesign!
 
 # License
 
-Ths project is [MIT licensed](./LICENSE).
+Ths project is [MIT licensed](https://github.com/arco-design/arco-design-vue/blob/main/LICENSE).

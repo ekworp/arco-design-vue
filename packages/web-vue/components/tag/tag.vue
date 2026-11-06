@@ -3,7 +3,10 @@
     <span v-if="$slots.icon" :class="`${prefixCls}-icon`">
       <slot name="icon" />
     </span>
-    <slot />
+    <span v-if="nowrap" :class="`${prefixCls}-text`">
+      <slot />
+    </span>
+    <slot v-else />
     <icon-hover
       v-if="closable"
       role="button"
@@ -24,13 +27,14 @@
 
 <script lang="ts">
 import type { CSSProperties, PropType } from 'vue';
-import { computed, defineComponent, ref, toRefs } from 'vue';
+import { computed, defineComponent, ref, toRefs, inject } from 'vue';
 import { getPrefixCls } from '../_utils/global-config';
 import IconHover from '../_components/icon-hover.vue';
 import IconClose from '../icon/icon-close';
 import IconLoading from '../icon/icon-loading';
 import { TAG_COLORS, TagColor } from './interface';
 import { useSize } from '../_hooks/use-size';
+import { configProviderInjectionKey } from '../config-provider/context';
 
 export default defineComponent({
   name: 'Tag',
@@ -124,6 +128,15 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
+    /**
+     * @zh 标签内容不换行
+     * @en Tag content does not wrap
+     * @version 2.56.1
+     */
+    nowrap: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: {
     'update:visible': (visible: boolean) => true,
@@ -190,6 +203,8 @@ export default defineComponent({
       }
     };
 
+    const configCtx = inject(configProviderInjectionKey, undefined);
+    const rtl = computed(() => configCtx?.rtl ?? false);
     const cls = computed(() => [
       prefixCls,
       `${prefixCls}-size-${mergedSize.value}`,
@@ -201,6 +216,7 @@ export default defineComponent({
         [`${prefixCls}-checkable`]: props.checkable,
         [`${prefixCls}-checked`]: computedChecked.value,
         [`${prefixCls}-custom-color`]: isCustomColor.value,
+        [`${prefixCls}-rtl`]: rtl.value,
       },
     ]);
 

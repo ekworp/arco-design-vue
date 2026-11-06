@@ -2,6 +2,24 @@
 changelog: true
 ```
 
+## 2.59.0
+
+`2026-10-20`
+
+### 🆕 Feature
+
+- Added `loadingFixedWidth` prop to keep button width unchanged during loading state. ([#3646](https://github.com/arco-design/arco-design-vue/pull/3646))
+
+
+## 2.56.3
+
+`2024-10-25`
+
+### 🆕 Feature
+
+- Support autofocus attribute for button ([#3293](https://github.com/arco-design/arco-design-vue/pull/3293))
+
+
 ## 2.54.0
 
 `2023-12-15`

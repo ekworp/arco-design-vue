@@ -23,6 +23,7 @@ description: 鼠标悬停、聚焦或点击在某个组件时，弹出的气泡�
 |---|---|---|:---:|
 |popup-visible **(v-model)**|文字气泡是否可见|`boolean`|`-`|
 |default-popup-visible|文字气泡默认是否可见（非受控模式）|`boolean`|`false`|
+|disabled|文字气泡是否禁用|`boolean`|`false`|
 |title|标题|`string`|`-`|
 |content|内容|`string`|`-`|
 |trigger|触发方式|`'hover' \| 'click' \| 'focus' \| 'contextMenu'`|`'hover'`|
@@ -31,7 +32,7 @@ description: 鼠标悬停、聚焦或点击在某个组件时，弹出的气泡�
 |content-style|弹出框内容的样式|`CSSProperties`|`-`|
 |arrow-class|弹出框箭头的类名|`ClassName`|`-`|
 |arrow-style|弹出框箭头的样式|`CSSProperties`|`-`|
-|popup-container|弹出框的挂载容器|`string \| HTMLElement \| null \| undefined`|`-`|
+|popup-container|弹出框的挂载容器|`string \| HTMLElement`|`-`|
 ### `<popover>` Events
 
 |事件名|描述|参数|

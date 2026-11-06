@@ -4,6 +4,7 @@
     :trigger="trigger"
     :position="position"
     :popup-visible="computedPopupVisible"
+    :disabled="disabled"
     :popup-offset="10"
     :content-class="contentCls"
     :content-style="contentStyle"
@@ -17,7 +18,7 @@
   >
     <slot />
     <template #content>
-      <div :class="`${prefixCls}-title`">
+      <div v-if="title || $slots.title" :class="`${prefixCls}-title`">
         <slot name="title">{{ title }}</slot>
       </div>
       <div :class="`${prefixCls}-content`">
@@ -55,6 +56,14 @@ export default defineComponent({
      * @en Whether the popover is visible by default (uncontrolled mode)
      */
     defaultPopupVisible: {
+      type: Boolean,
+      default: false,
+    },
+    /**
+     * @zh 文字气泡是否禁用
+     * @en Whether to disable the popover
+     */
+    disabled: {
       type: Boolean,
       default: false,
     },
@@ -119,9 +128,7 @@ export default defineComponent({
      * @en Mount container for pop-up box
      */
     popupContainer: {
-      type: [String, Object] as PropType<
-        string | HTMLElement | null | undefined
-      >,
+      type: [String, Object] as PropType<string | HTMLElement>,
     },
   },
   emits: {
@@ -145,7 +152,6 @@ export default defineComponent({
    */
   setup(props, { emit }) {
     const prefixCls = getPrefixCls('popover');
-
     const _popupVisible = ref(props.defaultPopupVisible);
     const computedPopupVisible = computed(
       () => props.popupVisible ?? _popupVisible.value

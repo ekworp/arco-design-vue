@@ -25,6 +25,7 @@ description: When the mouse hovers, focus, or click on a component, a bubble-lik
 |---|---|---|:---:|
 |popup-visible **(v-model)**|Whether the popover is visible|`boolean`|`-`|
 |default-popup-visible|Whether the popover is visible by default (uncontrolled mode)|`boolean`|`false`|
+|disabled|Whether to disable the popover|`boolean`|`false`|
 |title|Title|`string`|`-`|
 |content|Content|`string`|`-`|
 |trigger|Trigger method|`'hover' \| 'click' \| 'focus' \| 'contextMenu'`|`'hover'`|
@@ -33,7 +34,7 @@ description: When the mouse hovers, focus, or click on a component, a bubble-lik
 |content-style|The style of the popup content|`CSSProperties`|`-`|
 |arrow-class|The class name of the popup arrow|`ClassName`|`-`|
 |arrow-style|The style of the popup arrow|`CSSProperties`|`-`|
-|popup-container|Mount container for pop-up box|`string \| HTMLElement \| null \| undefined`|`-`|
+|popup-container|Mount container for pop-up box|`string \| HTMLElement`|`-`|
 ### `<popover>` Events
 
 |Event Name|Description|Parameters|

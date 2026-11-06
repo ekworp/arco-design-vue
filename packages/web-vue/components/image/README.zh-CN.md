@@ -110,13 +110,13 @@ description: 展示和预览图片。
 |mask-closable|点击 mask 是否触发关闭|`boolean`|`true`|
 |closable|是否显示关闭按钮|`boolean`|`true`|
 |actions-layout|控制条的布局|`string[]`|`[  'fullScreen',  'rotateRight',  'rotateLeft',  'zoomIn',  'zoomOut',  'originalSize',]`|
-|popup-container|设置弹出框的挂载点，同 `teleport` 的 `to`，缺省值是 document.body|`HTMLElement \| string`|`-`|
+|popup-container|设置弹出框的挂载点，同 `teleport` 的 `to`，缺省值是 document.body|`string \| HTMLElement`|`-`|
 ### `<image-preview-group>` Events
 
 |事件名|描述|参数|
 |---|---|---|
-|change|切换图片|-|
-|visible-change|预览的打开和关闭|-|
+|change|切换图片|index: `number`|
+|visible-change|预览的打开和关闭|visible: `boolean`|
 ### `<image-preview-group>` Slots
 
 |插槽名|描述|参数|版本|

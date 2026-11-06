@@ -2,6 +2,184 @@
 changelog: true
 ```
 
+## 2.59.0
+
+`2026-10-20`
+
+### 🆕 Feature
+
+- **calendar:** Align Calendar with key React capabilities (page date control, header type/operations, disabled date, custom renderers, week mode), and fix select-header today sync/highlight behavior. ([#3651](https://github.com/arco-design/arco-design-vue/pull/3651))
+- **modal:** Add `Modal.config` and `Modal.destroyAll`, with corresponding type definitions and tests. ([#3647](https://github.com/arco-design/arco-design-vue/pull/3647))
+- **button:** Added `loadingFixedWidth` prop to keep button width unchanged during loading state. ([#3646](https://github.com/arco-design/arco-design-vue/pull/3646))
+- **config-provider:** Added global config `autoInsertSpaceInButton` to auto-insert spacing for two-Chinese-character button text. ([#3646](https://github.com/arco-design/arco-design-vue/pull/3646))
+- **date-picker:** Added `utcOffset`, `timezone`, `hideNotInViewDates`, `clearRangeOnReselect`, and `panelRender` for DatePicker, with related docs and demos; timezone support addresses issue #241. ([#3645](https://github.com/arco-design/arco-design-vue/pull/3645))
+
+### 🐛 BugFix
+
+- **image:** ensure left mouse button is used for dragging ([#3665](https://github.com/arco-design/arco-design-vue/pull/3665))
+- **textarea:** Fix reading a stale `v-model` value in Textarea `input` event handlers. ([#3659](https://github.com/arco-design/arco-design-vue/pull/3659))
+- **verification-code:** improve cursor placement and focus behavior ([#3658](https://github.com/arco-design/arco-design-vue/pull/3658))
+- Fixed missing validation message fields in several i18n locale files ([#3656](https://github.com/arco-design/arco-design-vue/pull/3656))
+- Fix watcher errors during `dev-component` development builds. ([#3654](https://github.com/arco-design/arco-design-vue/pull/3654))
+- **mention:** Fix the mention dropdown remaining visible after clearing the input with `allow-clear` following an `@` trigger. ([#3653](https://github.com/arco-design/arco-design-vue/pull/3653))
+- Normalize Vitest snapshot line endings to LF to avoid false snapshot changes on Windows. ([#3653](https://github.com/arco-design/arco-design-vue/pull/3653))
+- **anchor:** Fixed incorrect target resolution in multi-container scenarios with duplicated `id`s. ([#3649](https://github.com/arco-design/arco-design-vue/pull/3649))
+- **date-picker:** Fix year panel boundary navigation/display issues to prevent negative years and invalid date rendering in low-year scenarios. ([#3648](https://github.com/arco-design/arco-design-vue/pull/3648))
+
+### 💎 Enhancement
+
+- **anchor:** Added missing Anchor capabilities to align with React (affix, offsets, direction, target-offset), and synced demos, docs, and tests. ([#3649](https://github.com/arco-design/arco-design-vue/pull/3649))
+- **date-picker:** Added `input-props` for passing native input attributes; added `fixed-time` for `RangePicker`; support custom panel header display format via locale `yearFormat/monthFormat`. ([#3644](https://github.com/arco-design/arco-design-vue/pull/3644))
+
+### 🆎 TypeScript
+
+- **trigger:** Add missing properties to `TriggerProps` ([#3663](https://github.com/arco-design/arco-design-vue/pull/3663))
+
+
+## 2.58.0
+
+`2026-04-16`
+
+### 🆕 Feature
+
+- **drawer:** Close mask, increase event penetration. ([#3626](https://github.com/arco-design/arco-design-vue/pull/3626))
+- **tooltip:** Add disabled attributes ([#3626](https://github.com/arco-design/arco-design-vue/pull/3626))
+
+### 🐛 BugFix
+
+- **date-picker:** Add a disabled date function and optimize the date checking logic ([#3630](https://github.com/arco-design/arco-design-vue/pull/3630))
+
+
+## 2.57.0
+
+`2025-03-10`
+
+### 🆕 Feature
+
+- **input:** Added 'prepend' and 'append' attributes ([#3452](https://github.com/arco-design/arco-design-vue/pull/3452))
+- **drawer:** Add bodyClass and bodyStyle ([#3437](https://github.com/arco-design/arco-design-vue/pull/3437))
+
+### 🐛 BugFix
+
+- **form:** fix where form id attribute was consumed and could not be propagated ([#3450](https://github.com/arco-design/arco-design-vue/pull/3450))
+- **input:** Fix the preValue calculation error in the input component ([#3427](https://github.com/arco-design/arco-design-vue/pull/3427))
+- **tabs:** resolve `wheel` event listener passive warning ([#3413](https://github.com/arco-design/arco-design-vue/pull/3413))
+- **tabs:** optimize memory release during tab removal ([#3413](https://github.com/arco-design/arco-design-vue/pull/3413))
+- **descriptions:** fixes the issue related to the layout distribution of span ([#3409](https://github.com/arco-design/arco-design-vue/pull/3409))
+- **message:** Fixed an issue where message positioning would be affected by layout and would not be displayed ([#3406](https://github.com/arco-design/arco-design-vue/pull/3406))
+- **table:** Fix fixed column background style issue in dark mode ([#3398](https://github.com/arco-design/arco-design-vue/pull/3398))
+- **slider:** Fixed Drag change slider value not working on mobile side ([#3343](https://github.com/arco-design/arco-design-vue/pull/3343))
+
+### 💎 Enhancement
+
+- **modal:** fix re-throw error in onBeforeOk for proper error handling ([#3407](https://github.com/arco-design/arco-design-vue/pull/3407))
+- **drawer:** fix re-throw error in onBeforeOk for proper error handling ([#3407](https://github.com/arco-design/arco-design-vue/pull/3407))
+- **popconfirm:** fix re-throw error in onBeforeOk for proper error handling ([#3407](https://github.com/arco-design/arco-design-vue/pull/3407))
+
+
+## 2.56.3
+
+`2024-10-25`
+
+### 🆕 Feature
+
+- **button:** Support autofocus attribute for button ([#3293](https://github.com/arco-design/arco-design-vue/pull/3293))
+
+### 🐛 BugFix
+
+- Fix Khmer language translations ([#3328](https://github.com/arco-design/arco-design-vue/pull/3328))
+- **cascader:** fix custom empty slot not working in some cases ([#3315](https://github.com/arco-design/arco-design-vue/pull/3315))
+- **input-number:** fix readonly not working in button mode ([#3314](https://github.com/arco-design/arco-design-vue/pull/3314))
+
+### 💎 Enhancement
+
+- **textarea:** Support textareaAttrs attribute for textarea ([#3303](https://github.com/arco-design/arco-design-vue/pull/3303))
+
+
+## 2.56.2
+
+`2024-09-13`
+
+### 🆕 Feature
+
+- Added Russian ([#3290](https://github.com/arco-design/arco-design-vue/pull/3290))
+
+### 🐛 BugFix
+
+- **select:** fix(switch): loading state can't be controlled with truthy initial state ([#3285](https://github.com/arco-design/arco-design-vue/pull/3285))
+- **calendar:** fix  modes not taking effect ([#3281](https://github.com/arco-design/arco-design-vue/pull/3281))
+- **radio:** fix not inheriting the injected size ([#3267](https://github.com/arco-design/arco-design-vue/pull/3267))
+
+### 🆎 TypeScript
+
+- **card:** update the types of headerStyle and bodyStyle ([#3268](https://github.com/arco-design/arco-design-vue/pull/3268))
+
+
+## 2.56.1
+
+`2024-08-22`
+
+### 🆕 Feature
+
+- **select:** add `tagNowrap` prop ([#3270](https://github.com/arco-design/arco-design-vue/pull/3270))
+
+
+## 2.56.0
+
+`2024-07-26`
+
+### 🆕 Feature
+
+- **input-number:** Added 'keydown' event to disable default behavior ([#3248](https://github.com/arco-design/arco-design-vue/pull/3248))
+
+### 🐛 BugFix
+
+- **tree:** fix tree node folding animation ([#3234](https://github.com/arco-design/arco-design-vue/pull/3234))
+- **color-picker:** fix shaking issue when selecting color with v-model ([#3180](https://github.com/arco-design/arco-design-vue/pull/3180))
+- **time-picker:** TriggerProps property not correctly passed through ([#3178](https://github.com/arco-design/arco-design-vue/pull/3178))
+
+### 💎 Enhancement
+
+- **menu:** fix color transition effect in selected menu item ([#3192](https://github.com/arco-design/arco-design-vue/pull/3192))
+
+
+## 2.55.3
+
+`2024-06-07`
+
+### 🆕 Feature
+
+- **table:** colum added the minWidth attribute ([#3157](https://github.com/arco-design/arco-design-vue/pull/3157))
+
+### 🐛 BugFix
+
+- **time-picker:** Fix issue with read-only mode still being editable ([#3173](https://github.com/arco-design/arco-design-vue/pull/3173))
+- **time-picker:** Added `placeholder` type definition ([#3173](https://github.com/arco-design/arco-design-vue/pull/3173))
+- **input:** fix display of allow-clear input button in read-only state ([#3172](https://github.com/arco-design/arco-design-vue/pull/3172))
+- **table:** fix table sticky-header failure with scrollbar ([#3170](https://github.com/arco-design/arco-design-vue/pull/3170))
+- **table:** Restore default style when table dynamically switches row-selection ([#3155](https://github.com/arco-design/arco-design-vue/pull/3155))
+
+
+## 2.55.2
+
+`2024-05-10`
+
+### 🐛 BugFix
+
+- **verification-code:** fix formatter not being applied during paste ([#3110](https://github.com/arco-design/arco-design-vue/pull/3110))
+- **upload:** import missing image styles for upload component ([#3101](https://github.com/arco-design/arco-design-vue/pull/3101))
+- **transfer:** fix disabled behavior in transfer simple mode ([#3067](https://github.com/arco-design/arco-design-vue/pull/3067))
+- **color-picker:** fix color-picker style import ([#3052](https://github.com/arco-design/arco-design-vue/pull/3052))
+
+### 💅 Style
+
+- **color-picker:** Optimize color control bar background fillet style ([#3116](https://github.com/arco-design/arco-design-vue/pull/3116))
+
+### 🆎 TypeScript
+
+- undefined ([#2998](https://github.com/arco-design/arco-design-vue/pull/2998))
+
+
 ## 2.55.1
 
 `2024-03-29`

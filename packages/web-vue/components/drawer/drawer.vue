@@ -4,7 +4,7 @@
       <div
         v-if="!unmountOnClose || computedVisible || mounted"
         v-show="computedVisible || mounted"
-        :class="`${prefixCls}-container`"
+        :class="classNames"
         :style="
           isFixed ? { zIndex } : { zIndex: 'inherit', position: 'absolute' }
         "
@@ -44,7 +44,7 @@
                 </div>
               </slot>
             </div>
-            <div :class="`${prefixCls}-body`">
+            <div :class="[`${prefixCls}-body`, bodyClass]" :style="bodyStyle">
               <slot />
             </div>
             <div v-if="footer" :class="`${prefixCls}-footer`">
@@ -74,7 +74,7 @@
 </template>
 
 <script lang="ts">
-import type { CSSProperties, PropType } from 'vue';
+import type { CSSProperties, PropType, StyleValue } from 'vue';
 import {
   computed,
   defineComponent,
@@ -98,7 +98,7 @@ import { KEYBOARD_KEY } from '../_utils/keyboard';
 import { useTeleportContainer } from '../_hooks/use-teleport-container';
 
 const DRAWER_PLACEMENTS = ['top', 'right', 'bottom', 'left'] as const;
-type DrawerPlacements = typeof DRAWER_PLACEMENTS[number];
+type DrawerPlacements = (typeof DRAWER_PLACEMENTS)[number];
 
 export default defineComponent({
   name: 'Drawer',
@@ -238,6 +238,22 @@ export default defineComponent({
       type: Object as PropType<CSSProperties>,
     },
     /**
+     * @zh 抽屉内容部分的类名
+     * @en The classname of the drawer body
+     * @version 2.57.0
+     */
+    bodyClass: {
+      type: [String, Array] as PropType<string | any[]>,
+    },
+    /**
+     * @zh 抽屉内容部分的样式
+     * @en Drawer body style
+     * @version 2.57.0
+     */
+    bodyStyle: {
+      type: [String, Object, Array] as PropType<StyleValue>,
+    },
+    /**
      * @zh 触发 ok 事件前的回调函数。如果返回 false 则不会触发后续事件，也可使用 done 进行异步关闭。
      * @en The callback function before the ok event is triggered. If false is returned, subsequent events will not be triggered, and done can also be used to close asynchronously.
      */
@@ -362,6 +378,12 @@ export default defineComponent({
     const computedVisible = computed(() => props.visible ?? _visible.value);
     const _okLoading = ref(false);
     const mergedOkLoading = computed(() => props.okLoading || _okLoading.value);
+    const classNames = computed(() => [
+      `${prefixCls}-container`,
+      {
+        [`${prefixCls}-penetrable`]: !props.mask,
+      },
+    ]);
 
     const { teleportContainer, containerRef } = useTeleportContainer({
       popupContainer,
@@ -427,6 +449,7 @@ export default defineComponent({
                 result = (await result) ?? true;
               } catch (error) {
                 result = false;
+                throw error;
               }
             }
             if (isBoolean(result)) {
@@ -526,6 +549,7 @@ export default defineComponent({
 
     return {
       prefixCls,
+      classNames,
       style,
       t,
       mounted,

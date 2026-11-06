@@ -122,6 +122,18 @@ export default defineComponent({
       type: String as PropType<'text' | 'password'>,
       default: 'text',
     },
+    /**
+     * @zh 前置标签
+     * @en Prepend
+     * @version 2.57.0
+     */
+    prepend: String,
+    /**
+     * @zh 后置标签
+     * @en Append
+     * @version 2.57.0
+     */
+    append: String,
   },
   emits: {
     'update:modelValue': (value: string) => true,
@@ -201,6 +213,7 @@ export default defineComponent({
     // 值相关
     const _value = ref(props.defaultValue);
     const computedValue = computed(() => props.modelValue ?? _value.value);
+    let preValue = computedValue.value;
 
     watch(modelValue, (value) => {
       if (isUndefined(value) || isNull(value)) {
@@ -208,13 +221,16 @@ export default defineComponent({
       }
     });
 
-    let preValue = computedValue.value;
+    watch(computedValue, (value, oldValue) => {
+      preValue = oldValue;
+    });
 
     // 状态相关
     const focused = ref(false);
     const showClearBtn = computed(
       () =>
         props.allowClear &&
+        !props.readonly &&
         !mergedDisabled.value &&
         Boolean(computedValue.value)
     );
@@ -290,7 +306,6 @@ export default defineComponent({
 
     const handleFocus = (ev: FocusEvent) => {
       focused.value = true;
-      preValue = computedValue.value;
       emit('focus', ev);
       eventHandlers.value?.onFocus?.(ev);
     };
@@ -473,15 +488,19 @@ export default defineComponent({
     );
 
     const render = () => {
-      if (slots.prepend || slots.append) {
+      if (slots.prepend || slots.append || props.prepend || props.append) {
         return (
           <span class={outerCls.value} {...wrapperAttrs.value}>
-            {slots.prepend && (
-              <span class={`${prefixCls}-prepend`}>{slots.prepend()}</span>
+            {(slots.prepend || props.prepend) && (
+              <span class={`${prefixCls}-prepend`}>
+                {slots.prepend ? slots.prepend() : props.prepend}
+              </span>
             )}
             {renderInput(true)}
-            {slots.append && (
-              <span class={`${prefixCls}-append`}>{slots.append()}</span>
+            {(slots.append || props.append) && (
+              <span class={`${prefixCls}-append`}>
+                {slots.append ? slots.append() : props.append}
+              </span>
             )}
           </span>
         );

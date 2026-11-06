@@ -2,6 +2,24 @@
 changelog: true
 ```
 
+## 2.59.0
+
+`2026-10-20`
+
+### 🆕 Feature
+
+- Align Calendar with key React capabilities (page date control, header type/operations, disabled date, custom renderers, week mode), and fix select-header today sync/highlight behavior. ([#3651](https://github.com/arco-design/arco-design-vue/pull/3651))
+
+
+## 2.56.2
+
+`2024-09-13`
+
+### 🐛 BugFix
+
+- fix  modes not taking effect ([#3281](https://github.com/arco-design/arco-design-vue/pull/3281))
+
+
 ## 2.53.3
 
 `2023-11-24`

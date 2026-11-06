@@ -82,6 +82,12 @@
     color: @tag-default-color-icon;
   }
 
+  &-text {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
   each(@colors, {
     &&-checked&-@{value} {
       color: ~'@{tag-@{value}-color-text}';
@@ -145,4 +151,21 @@
       background-color: ~'rgba(var(@{arco-cssvars-prefix}-@{value}-6), 0.35)';
     }
   });
+}
+
+.@{tag-prefix-cls}-rtl {
+  direction: rtl;
+
+  .@{tag-prefix-cls} {
+    &-icon {
+      margin-right: 0;
+      margin-left: @tag-icon-margin-right;
+    }
+
+    &-close-btn,
+    &-loading-icon {
+      margin-right: 4px;
+      margin-left: 0;
+    }
+  }
 }

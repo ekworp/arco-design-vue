@@ -100,9 +100,13 @@ export interface BasePickerProps {
   defaultPopupVisible: boolean;
   triggerProps?: Record<string, unknown>;
   unmountOnClose: boolean;
+  inputProps?: Record<string, any>;
   valueFormat?: ValueFormat;
   previewShortcut: boolean;
   showConfirm?: boolean;
+  hideNotInViewDates?: boolean;
+  utcOffset?: number;
+  timezone?: string;
 }
 
 export type PickerProps = BasePickerProps &
@@ -131,6 +135,9 @@ export interface RangePickerProps extends BasePickerProps {
   disabledTime?: RangeDisabledTime;
   separator?: string;
   exchangeTime: boolean;
+  inputProps?: Record<string, any>[];
+  fixedTime?: boolean;
+  clearRangeOnReselect?: boolean;
 }
 
 export interface Cell {

@@ -8,6 +8,7 @@
           :header-value="headerPanelHeaderValue"
           :header-icons="headerIcons"
           :header-operations="headerPanelHeaderOperations"
+          :disabled-date="disabledDate"
           @select="onHeaderPanelSelect"
         />
         <MonthPanel
@@ -16,6 +17,7 @@
           :header-icons="headerIcons"
           :header-operations="headerPanelHeaderOperations"
           :abbreviation="abbreviation"
+          :disabled-date="disabledDate"
           @select="onHeaderPanelSelect"
           @header-label-click="onMonthHeaderLabelClick"
         />
@@ -41,11 +43,13 @@
           v-bind="commonPanelProps"
           mode="date"
           :show-time="showTime"
+          :hide-not-in-view-dates="hideNotInViewDates"
           :time-picker-props="timePickerProps"
           :day-start-of-week="dayStartOfWeek"
           :footer-value="footerValue"
           :time-picker-value="timePickerValue"
           :disabled-time="disabledTime"
+          :now="panelNow"
           @timePickerSelect="onTimePickerSelect"
         />
         <PanelFooter
@@ -191,6 +195,18 @@ export default defineComponent({
     abbreviation: {
       type: Boolean,
     },
+    hideNotInViewDates: {
+      type: Boolean,
+    },
+    utcOffset: {
+      type: Number,
+    },
+    timezone: {
+      type: String,
+    },
+    now: {
+      type: Object as PropType<Dayjs>,
+    },
   },
   emits: [
     'cell-click',
@@ -220,6 +236,9 @@ export default defineComponent({
       headerIcons,
       headerOperations,
       headerMode,
+      utcOffset,
+      timezone,
+      now,
     } = toRefs(props);
 
     const hasShortcuts = computed(() =>
@@ -257,7 +276,12 @@ export default defineComponent({
       },
     ]);
 
-    const footerValue = computed(() => value?.value || getNow());
+    const footerValue = computed(
+      () => value?.value || getNow(utcOffset?.value, timezone?.value)
+    );
+    const mergedNow = computed(
+      () => now?.value || getNow(utcOffset?.value, timezone?.value)
+    );
 
     const {
       headerValue: headerPanelHeaderValue,
@@ -278,7 +302,9 @@ export default defineComponent({
       const { value } = shortcut;
       return getDayjsValue(
         (isFunction(value) ? value() : value) as CalendarValue,
-        shortcut.format || format.value
+        shortcut.format || format.value,
+        utcOffset?.value,
+        timezone?.value
       );
     }
 
@@ -300,7 +326,7 @@ export default defineComponent({
     }
 
     function onTodayBtnClick() {
-      emit('today-btn-click', getNow());
+      emit('today-btn-click', mergedNow.value);
     }
 
     function onConfirmBtnClick() {
@@ -348,6 +374,7 @@ export default defineComponent({
       shortcutsProps,
       commonPanelProps,
       footerValue,
+      panelNow: mergedNow,
       onTodayBtnClick,
       onConfirmBtnClick,
       onTimePickerSelect,

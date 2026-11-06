@@ -43,7 +43,7 @@ Set the basic usage of internationalized languages.
   </a-config-provider>
 </template>
 
-<script>
+<script setup lang="ts">
 import { ref, computed } from 'vue';
 import zhCN from '@arco-design/web-vue/es/locale/lang/zh-cn';
 import enUS from '@arco-design/web-vue/es/locale/lang/en-us';
@@ -57,6 +57,7 @@ import koKR from '@arco-design/web-vue/es/locale/lang/ko-kr';
 import itIT from '@arco-design/web-vue/es/locale/lang/it-it';
 import thTH from '@arco-design/web-vue/es/locale/lang/th-th';
 import viVN from '@arco-design/web-vue/es/locale/lang/vi-vn';
+import nlNL from '@arco-design/web-vue/es/locale/lang/nl-nl';
 
 const locales = {
   'zh-CN': zhCN,
@@ -71,21 +72,13 @@ const locales = {
   'it-IT': itIT,
   'th-TH': thTH,
   'vi-VN': viVN,
+  'nl-NL': nlNL,
 };
 
-export default {
-  setup() {
-    const localeType = ref('es-ES');
-    const locale = computed(() => {
-      return locales[localeType.value] || zhCN;
-    });
-
-    return {
-      localeType,
-      locale,
-      localeOptions: Object.keys(locales),
-    };
-  },
-};
+const localeType = ref('es-ES');
+const locale = computed(() => {
+  return locales[localeType.value] || zhCN;
+});
+const localeOptions = Object.keys(locales);
 </script>
 ```

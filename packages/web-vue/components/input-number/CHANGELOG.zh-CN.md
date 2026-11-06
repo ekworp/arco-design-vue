@@ -2,6 +2,24 @@
 changelog: true
 ```
 
+## 2.56.3
+
+`2024-10-25`
+
+### 🐛 问题修复
+
+- 修复左右按钮模式下只读属性不生效问题 ([#3314](https://github.com/arco-design/arco-design-vue/pull/3314))
+
+
+## 2.56.0
+
+`2024-07-26`
+
+### 🆕 新增功能
+
+- 增加 'keydown' 事件，可以禁止默认行为 ([#3248](https://github.com/arco-design/arco-design-vue/pull/3248))
+
+
 ## 2.54.6
 
 `2024-03-01`

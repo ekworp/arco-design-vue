@@ -43,13 +43,13 @@
             "
           >
             <RenderFunction
-              v-if="dateRender"
+              v-if="dateRender && !isHiddenNotInViewCell(cell)"
               :render-func="dateRender"
               :date="getDateValue(cell.value)"
             />
             <div v-else :class="`${prefixCls}-date`">
               <div :class="`${prefixCls}-date-value`">
-                {{ cell.label }}
+                {{ isHiddenNotInViewCell(cell) ? '' : cell.label }}
               </div>
             </div>
           </div>
@@ -63,10 +63,10 @@
 import { Dayjs } from 'dayjs';
 import { computed, defineComponent, PropType, reactive, toRefs } from 'vue';
 import type { Cell, DisabledDate, IsSameTime, Mode } from '../interface';
-import { isFunction } from '../../_utils/is';
 import useCellClassName from '../hooks/use-cell-class-name';
 import RenderFunction, { RenderFunc } from '../../_components/render-function';
 import { getDateValue } from '../../_utils/date';
+import { isDisabledDate } from '../utils';
 
 export default defineComponent({
   name: 'PanelBody',
@@ -95,17 +95,30 @@ export default defineComponent({
     mode: {
       type: String as PropType<Mode>,
     },
+    hideNotInViewDates: {
+      type: Boolean,
+    },
     rangeValues: {
       type: Array as PropType<Array<Dayjs | undefined>>,
     },
     dateRender: {
       type: Function as PropType<RenderFunc>,
     },
+    now: {
+      type: Object as PropType<Dayjs>,
+    },
   },
   emits: ['cell-click', 'cell-mouse-enter'],
   setup(props, { emit }) {
-    const { prefixCls, value, disabledDate, isSameTime, mode, rangeValues } =
-      toRefs(props);
+    const {
+      prefixCls,
+      value,
+      disabledDate,
+      isSameTime,
+      mode,
+      rangeValues,
+      now,
+    } = toRefs(props);
 
     const { getCellClassName } = useCellClassName(
       reactive({
@@ -114,14 +127,15 @@ export default defineComponent({
         isSameTime,
         mode,
         rangeValues,
+        now,
       })
     );
 
     const isCellDisabled = (cellData: Cell) =>
-      !!(
-        isFunction(disabledDate?.value) &&
-        disabledDate?.value(getDateValue(cellData.value))
-      );
+      isDisabledDate(cellData.value, disabledDate?.value, mode?.value);
+
+    const isHiddenNotInViewCell = (cellData: Cell) =>
+      props.hideNotInViewDates && (cellData.isPrev || cellData.isNext);
 
     return {
       isWeek: computed(() => mode?.value === 'week'),
@@ -130,20 +144,24 @@ export default defineComponent({
         return getCellClassName(cellData, disabled);
       },
       onCellClick: (cellData: Cell) => {
-        const disabled = isCellDisabled(cellData);
+        const disabled =
+          isCellDisabled(cellData) || isHiddenNotInViewCell(cellData);
         if (disabled) return;
         emit('cell-click', cellData);
       },
       onCellMouseEnter: (cellData: Cell) => {
-        const disabled = isCellDisabled(cellData);
+        const disabled =
+          isCellDisabled(cellData) || isHiddenNotInViewCell(cellData);
         if (disabled) return;
         emit('cell-mouse-enter', cellData);
       },
       onCellMouseLeave: (cellData: Cell) => {
-        const disabled = isCellDisabled(cellData);
+        const disabled =
+          isCellDisabled(cellData) || isHiddenNotInViewCell(cellData);
         if (disabled) return;
         emit('cell-mouse-enter', cellData);
       },
+      isHiddenNotInViewCell,
       getDateValue,
     };
   },

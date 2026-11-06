@@ -60,7 +60,7 @@ description: 指在选择器选项数量较多时，采用多级分类的方式�
 |default-popup-visible|是否默认显示下拉框（非受控状态）|`boolean`|`false`||
 |placeholder|占位符|`string`|`-`||
 |filter-option|自定义选项过滤方法|`(inputValue: string, option: CascaderOption) => boolean`|`-`||
-|popup-container|弹出框的挂载容器|`string \| HTMLElement \| null \| undefined`|`-`||
+|popup-container|弹出框的挂载容器|`string \| HTMLElement`|`-`||
 |max-tag-count|多选模式下，最多显示的标签数量。0 表示不限制|`number`|`0`||
 |format-label|格式化展示内容|`(options: CascaderOption[]) => string`|`-`||
 |trigger-props|下拉菜单的触发器属性|`TriggerProps`|`-`||
@@ -74,6 +74,7 @@ description: 指在选择器选项数量较多时，采用多级分类的方式�
 |fallback|自定义不存在选项的值的展示|`boolean\| ((    value:      \| string      \| number      \| Record<string, unknown>      \| (string \| number \| Record<string, unknown>)[]  ) => string)`|`true`|2.29.0|
 |expand-child|是否展开子菜单|`boolean`|`false`|2.29.0|
 |virtual-list-props|传递虚拟列表属性，传入此参数以开启虚拟滚动 [VirtualListProps](#VirtualListProps)|`VirtualListProps`|`-`|2.49.0|
+|tag-nowrap|标签内容不换行|`boolean`|`false`|2.56.1|
 ### `<cascader>` Events
 
 |事件名|描述|参数|

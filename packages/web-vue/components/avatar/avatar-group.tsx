@@ -6,6 +6,8 @@ import {
   ref,
   provide,
   toRefs,
+  computed,
+  inject,
 } from 'vue';
 import { getPrefixCls } from '../_utils/global-config';
 import { AvatarShape } from './interface';
@@ -14,6 +16,7 @@ import Popover from '../popover';
 import { TriggerProps } from '../trigger';
 import { getAllElements } from '../_utils/vue-utils';
 import { avatarGroupInjectionKey } from './context';
+import { configProviderInjectionKey } from '../config-provider/context';
 
 const AvatarGroup = defineComponent({
   name: 'AvatarGroup',
@@ -76,6 +79,8 @@ const AvatarGroup = defineComponent({
   setup(props, { slots }) {
     const { shape, size, autoFixFontSize, zIndexAscend } = toRefs(props);
     const prefixCls = getPrefixCls('avatar-group');
+    const configCtx = inject(configProviderInjectionKey, undefined);
+    const rtl = computed(() => configCtx?.rtl ?? false);
 
     const total = ref(0);
 
@@ -87,6 +92,7 @@ const AvatarGroup = defineComponent({
         autoFixFontSize,
         zIndexAscend,
         total,
+        rtl,
       })
     );
 
@@ -102,7 +108,7 @@ const AvatarGroup = defineComponent({
       }
 
       return (
-        <div class={prefixCls}>
+        <div class={`${prefixCls} ${rtl.value ? `${prefixCls}-rtl` : ''}`}>
           {avatarsToRender}
           {avatarsInPopover.length > 0 && (
             <Popover

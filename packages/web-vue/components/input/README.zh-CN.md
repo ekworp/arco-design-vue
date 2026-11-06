@@ -48,6 +48,8 @@ description: 基本表单组件，并在原生控件基础上进行了功能扩�
 |word-length|字符长度的计算方法|`(value: string) => number`|`-`||
 |word-slice|字符截取方法，同 wordLength 一起使用|`(value: string, maxLength: number) => string`|`-`|2.12.0|
 |input-attrs|内部 input 元素的属性|`object`|`-`|2.27.0|
+|prepend|前置标签|`string`|`-`|2.57.0|
+|append|后置标签|`string`|`-`|2.57.0|
 ### `<input>` Events
 
 |事件名|描述|参数|

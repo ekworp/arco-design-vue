@@ -10,6 +10,8 @@ interface HeaderValueProps {
   defaultValue?: CalendarValue;
   selectedValue?: Dayjs;
   format: string;
+  utcOffset?: number;
+  timezone?: string;
   onChange?: (newVal: Dayjs) => void;
 }
 
@@ -20,10 +22,19 @@ export default function useHeaderValue(props: HeaderValueProps): {
   resetHeaderValue: (emitChange?: boolean) => void;
   getDefaultLocalValue: () => Dayjs;
 } {
-  const { mode, value, defaultValue, selectedValue, format, onChange } =
-    toRefs(props);
+  const {
+    mode,
+    value,
+    defaultValue,
+    selectedValue,
+    format,
+    utcOffset,
+    timezone,
+    onChange,
+  } = toRefs(props);
 
   const computedMode = computed(() => mode?.value || 'date');
+  const MIN_YEAR = 0;
 
   const { span, superSpan } = usePanelSpan(
     reactive({
@@ -40,14 +51,21 @@ export default function useHeaderValue(props: HeaderValueProps): {
   };
 
   const computedValue = computed(() =>
-    getDayjsValue(value?.value, format.value)
+    getDayjsValue(value?.value, format.value, utcOffset?.value, timezone?.value)
   );
 
   const computedDefaultValue = computed(() =>
-    getDayjsValue(defaultValue?.value, format.value)
+    getDayjsValue(
+      defaultValue?.value,
+      format.value,
+      utcOffset?.value,
+      timezone?.value
+    )
   );
 
-  const localValue = ref(computedDefaultValue.value || getNow());
+  const localValue = ref(
+    computedDefaultValue.value || getNow(utcOffset?.value, timezone?.value)
+  );
   const headerValue = computed(() => computedValue.value || localValue.value);
 
   const setLocalValue = (newVal: Dayjs | undefined) => {
@@ -75,7 +93,11 @@ export default function useHeaderValue(props: HeaderValueProps): {
   );
 
   function getDefaultLocalValue() {
-    return selectedValue?.value || computedDefaultValue.value || getNow();
+    return (
+      selectedValue?.value ||
+      computedDefaultValue.value ||
+      getNow(utcOffset?.value, timezone?.value)
+    );
   }
   function resetHeaderValue(emitChange = true) {
     const defaultLocalValue = getDefaultLocalValue();
@@ -88,24 +110,40 @@ export default function useHeaderValue(props: HeaderValueProps): {
 
   const showSingleBtn = computed(() => span.value !== superSpan.value);
 
-  const headerOperations = computed(() => ({
-    onSuperPrev: () => {
-      setHeaderValue(methods.subtract(headerValue.value, superSpan.value, 'M'));
-    },
-    onPrev: showSingleBtn.value
+  const canMovePrev = (months: number) =>
+    methods.subtract(headerValue.value, months, 'M').year() >= MIN_YEAR;
+
+  const headerOperations = computed(() => {
+    const onSuperPrev = canMovePrev(superSpan.value)
       ? () => {
-          setHeaderValue(methods.subtract(headerValue.value, span.value, 'M'));
+          setHeaderValue(
+            methods.subtract(headerValue.value, superSpan.value, 'M')
+          );
         }
-      : undefined,
-    onNext: showSingleBtn.value
-      ? () => {
-          setHeaderValue(methods.add(headerValue.value, span.value, 'M'));
-        }
-      : undefined,
-    onSuperNext: () => {
-      setHeaderValue(methods.add(headerValue.value, superSpan.value, 'M'));
-    },
-  }));
+      : undefined;
+
+    const onPrev =
+      showSingleBtn.value && canMovePrev(span.value)
+        ? () => {
+            setHeaderValue(
+              methods.subtract(headerValue.value, span.value, 'M')
+            );
+          }
+        : undefined;
+
+    return {
+      onSuperPrev,
+      onPrev,
+      onNext: showSingleBtn.value
+        ? () => {
+            setHeaderValue(methods.add(headerValue.value, span.value, 'M'));
+          }
+        : undefined,
+      onSuperNext: () => {
+        setHeaderValue(methods.add(headerValue.value, superSpan.value, 'M'));
+      },
+    };
+  });
 
   return {
     headerValue,

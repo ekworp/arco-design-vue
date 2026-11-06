@@ -8,7 +8,9 @@ export interface ButtonProps {
   size?: Size;
   long?: boolean;
   loading?: boolean;
+  loadingFixedWidth?: boolean;
   disabled?: boolean;
   htmlType?: string;
+  autofocus?: boolean;
   href?: string;
 }

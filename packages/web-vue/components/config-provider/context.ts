@@ -7,9 +7,11 @@ export interface ConfigProvider {
   prefixCls?: string;
   locale?: ArcoLang;
   size?: Size;
+  autoInsertSpaceInButton?: boolean;
   updateAtScroll?: boolean;
   scrollToClose?: boolean;
   exchangeTime?: boolean;
+  rtl?: boolean;
 }
 
 export const configProviderInjectionKey: InjectionKey<ConfigProvider> =

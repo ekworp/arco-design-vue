@@ -18,6 +18,7 @@
           : {}
       "
     >
+      <slot name="list-prefix" />
       <Component
         :is="mergedComponent.content"
         ref="contentRef"
@@ -51,8 +52,7 @@ import {
   nextTick,
   ref,
   toRefs,
-  watch,
-  reactive,
+  PropType,
 } from 'vue';
 import { useSize } from './hooks/use-size';
 import VirtualListItem from './virtual-list-item';
@@ -69,7 +69,7 @@ export default defineComponent({
       default: 200,
     },
     data: {
-      type: Array,
+      type: Array as PropType<Record<string, any>[]>,
       default: () => [],
     },
     threshold: {

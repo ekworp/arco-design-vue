@@ -2,6 +2,28 @@
 changelog: true
 ```
 
+## 2.58.0
+
+`2026-04-16`
+
+### 🆕 Feature
+
+- Close mask, increase event penetration. ([#3626](https://github.com/arco-design/arco-design-vue/pull/3626))
+
+
+## 2.57.0
+
+`2025-03-10`
+
+### 🆕 Feature
+
+- Add bodyClass and bodyStyle ([#3437](https://github.com/arco-design/arco-design-vue/pull/3437))
+
+### 💎 Enhancement
+
+- fix re-throw error in onBeforeOk for proper error handling ([#3407](https://github.com/arco-design/arco-design-vue/pull/3407))
+
+
 ## 2.45.3
 
 `2023-04-28`

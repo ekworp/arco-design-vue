@@ -2,6 +2,29 @@
 changelog: true
 ```
 
+## 2.57.0
+
+`2025-03-10`
+
+### 🐛 问题修复
+
+- 修复暗黑模式下固定列选中背景样式透明 ([#3398](https://github.com/arco-design/arco-design-vue/pull/3398))
+
+
+## 2.55.3
+
+`2024-06-07`
+
+### 🆕 新增功能
+
+- column 增加 minWidth 属性 ([#3157](https://github.com/arco-design/arco-design-vue/pull/3157))
+
+### 🐛 问题修复
+
+- 修复虚拟滚动条开启时 sticky-header 吸顶失效 ([#3170](https://github.com/arco-design/arco-design-vue/pull/3170))
+- table动态切换row-selection时恢复默认样式 ([#3155](https://github.com/arco-design/arco-design-vue/pull/3155))
+
+
 ## 2.54.4
 
 `2024-02-02`

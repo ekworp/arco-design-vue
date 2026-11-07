@@ -5,6 +5,7 @@ import {
   getVueId,
   isDemoMarkdown,
   isVirtualModule,
+  normalizeVirtualModuleId,
 } from './utils';
 import marked from './marked';
 
@@ -31,14 +32,14 @@ export default function vueMdPlugin(): any {
     resolveId(id: string) {
       // 遇到虚拟md模块，直接返回id
       if (isVirtualModule(id)) {
-        return id;
+        return `\0${normalizeVirtualModuleId(id)}`;
       }
       return null;
     },
     load(id: string) {
       // 遇到虚拟md模块，直接返回缓存的内容
       if (isVirtualModule(id)) {
-        return getDescriptor(id);
+        return getDescriptor(normalizeVirtualModuleId(id).split('?')[0]);
       }
       return null;
     },
@@ -50,7 +51,13 @@ export default function vueMdPlugin(): any {
         return this.error('Not found plugin [vite:vue]');
       }
       if (isVirtualModule(id)) {
-        return callHook(vuePlugin, 'transform', this, code, getVueId(id));
+        return callHook(
+          vuePlugin,
+          'transform',
+          this,
+          code,
+          getVueId(normalizeVirtualModuleId(id).split('?')[0]),
+        );
       }
 
       const tokens = marked.lexer(code);
@@ -93,7 +100,9 @@ export default function vueMdPlugin(): any {
         : transformMain(tokens, file, frontMatter);
 
       if (isDemo) {
-        const virtualPath = `/@virtual${file}`;
+        const virtualPath = `arco-vue-docs:${encodeURIComponent(
+          file.replace(/\\/g, '/'),
+        )}`;
 
         const mods = moduleGraph.getModulesByFile(virtualPath);
         if (mods) {

@@ -15,16 +15,16 @@
     "less": "lessc src/navbar.less src/navbar.css"
   },
   "devDependencies": {
-    "@arco-design/web-react": "^2.65.0",
+    "@arco-design/web-react": "^2.66.18",
     "@arco-materials/site-navbar-new": "^1.2.13",
-    "@docsearch/react": "3.0.0-alpha.42",
+    "@docsearch/react": "^5.2.0",
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
     "esbuild": "^0.28.2",
-    "less": "^4.2.2",
+    "less": "^4.9.1",
     "prettier": "^3.9.10",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "react-transition-group": "^4.4.5",
     "vite": "^6.4.5"
   },

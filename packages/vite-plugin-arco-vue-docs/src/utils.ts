@@ -19,7 +19,7 @@ export const isFileImport = (token: any): token is FileImportToken => {
 };
 
 export const isI18nDescription = (
-  token: any
+  token: any,
 ): token is I18nDescriptionToken => {
   return token.type === 'i18nDescription';
 };
@@ -59,7 +59,11 @@ export const getTemplateString = (string: string): string => {
 };
 
 export const isVirtualModule = (id: string) => {
-  return /\/@virtual/.test(id);
+  return /\/@virtual|arco-vue-docs:/.test(id);
+};
+
+export const normalizeVirtualModuleId = (id: string) => {
+  return id.replace(/^\/@id\/__x00__\//, '').replace(/^\0/, '');
 };
 
 export const isDemoMarkdown = (id: string) => {
@@ -76,7 +80,10 @@ export const getFrontMatter = (tokens: any[]) => {
 };
 
 export const getVueId = (id: string) => {
-  return id.replace('.md', '.vue');
+  const filename = id
+    .replace(/^\/@virtual\//, '')
+    .replace(/^arco-vue-docs:/, '');
+  return decodeURIComponent(filename).replace('.md', '.vue');
 };
 
 export const getValidFilename = (filename: string) => {

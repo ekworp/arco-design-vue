@@ -12,12 +12,12 @@
   "devDependencies": {
     "@arco-design/web-vue": "workspace:*",
     "@vitejs/plugin-vue": "^6.0.0",
-    "@storybook/addon-essentials": "^8.6.14",
-    "@storybook/addon-links": "^8.6.14",
-    "@storybook/vue3": "^8.6.14",
-    "@storybook/vue3-vite": "^8.6.14",
-    "less": "^4.2.2",
-    "storybook": "^8.6.14",
+    "@storybook/addon-essentials": "^8.6.19",
+    "@storybook/addon-links": "^8.6.19",
+    "@storybook/vue3": "^8.6.19",
+    "@storybook/vue3-vite": "^8.6.19",
+    "less": "^4.9.1",
+    "storybook": "^8.6.19",
     "vite": "^6.3.5",
     "vue": "^3.5.45"
   },

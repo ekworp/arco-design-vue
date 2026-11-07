@@ -22,11 +22,11 @@ Object.defineProperty(window, 'matchMedia', {
 
 vi.mock('resize-observer-polyfill', () => ({
   __esModule: true,
-  default: vi.fn().mockImplementation(() => ({
-    observe: vi.fn(),
-    unobserve: vi.fn(),
-    disconnect: vi.fn(),
-  })),
+  default: class ResizeObserverMock {
+    observe = vi.fn();
+    unobserve = vi.fn();
+    disconnect = vi.fn();
+  },
 }));
 
 config.global.plugins = [ArcoVue, ArcoVueIcon];

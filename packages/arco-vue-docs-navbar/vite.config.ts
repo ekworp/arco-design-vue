@@ -4,16 +4,6 @@ import svgr from './plugins/rollup-plugin-svgr';
 
 export default defineConfig({
   mode: 'development',
-  resolve: {
-    alias: {
-      '@docsearch/react/dist/esm/AlgoliaLogo': path.resolve(
-        'node_modules/@docsearch/react/dist/esm/AlgoliaLogo.js',
-      ),
-      '@docsearch/react/dist/esm/useSearchClient': path.resolve(
-        'node_modules/@docsearch/react/dist/esm/useSearchClient.js',
-      ),
-    },
-  },
   css: {
     preprocessorOptions: {
       less: {
@@ -38,5 +28,31 @@ export default defineConfig({
       },
     },
   },
-  plugins: [svgr()],
+  plugins: [
+    {
+      name: 'docsearch-compat',
+      resolveId(id) {
+        if (id === '@docsearch/react/dist/esm/AlgoliaLogo') {
+          return '\0docsearch-algolia-logo';
+        }
+        if (id === '@docsearch/react/dist/esm/useSearchClient') {
+          return '\0docsearch-use-search-client';
+        }
+      },
+      load(id) {
+        const modulePath = path
+          .resolve(
+            'node_modules/@docsearch/react/dist/esm/useSearchClient-Dfh7Oq9Z.js',
+          )
+          .replaceAll('\\', '/');
+        if (id === '\0docsearch-algolia-logo') {
+          return `export { a as AlgoliaLogo } from '${modulePath}';`;
+        }
+        if (id === '\0docsearch-use-search-client') {
+          return `export { t as useSearchClient } from '${modulePath}';`;
+        }
+      },
+    },
+    svgr(),
+  ],
 });

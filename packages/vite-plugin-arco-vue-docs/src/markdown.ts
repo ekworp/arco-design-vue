@@ -10,7 +10,7 @@ import { parseChangelog } from './parse-changelog';
 export const transformMain = (
   tokens: any[],
   filename: string,
-  frontMatter: any
+  frontMatter: any,
 ) => {
   const imports: string[] = [];
   const components: string[] = [];
@@ -40,10 +40,12 @@ export const transformMain = (
 export const transformDemo = (
   tokens: any[],
   filename: string,
-  frontMatter?: any
+  frontMatter?: any,
 ) => {
   const basename = path.basename(filename, '.md');
-  const virtualPath = `/@virtual${filename}`;
+  const virtualPath = `arco-vue-docs:${encodeURIComponent(
+    filename.replace(/\\/g, '/'),
+  )}`;
   const data = {
     id: basename,
     title: frontMatter?.title ?? '',

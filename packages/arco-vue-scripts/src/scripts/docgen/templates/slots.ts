@@ -3,7 +3,7 @@ import { escapeCharacter, toKebabCase } from '../utils';
 
 const bindingsTmpl = (bindings: SlotDescriptor['bindings']): string => {
   return (bindings || [])
-    .map((binding: SlotDescriptor['bindings'][number]) => {
+    .map((binding: NonNullable<SlotDescriptor['bindings']>[number]) => {
       const { type, name, description } = binding;
       const res = [];
       name && res.push(name);
@@ -19,7 +19,7 @@ const bindingsTmpl = (bindings: SlotDescriptor['bindings']): string => {
 
 const tmpl = (slots: SlotDescriptor[], lang: string) => {
   const displayableSlots = slots.filter(
-    (slot) => slot.description || lang in (slot.tags ?? {})
+    (slot) => slot.description || lang in (slot.tags ?? {}),
   );
   const hasVersion = displayableSlots.some((slot) => slot?.tags?.version);
   const content = displayableSlots
@@ -31,7 +31,7 @@ const tmpl = (slots: SlotDescriptor[], lang: string) => {
       }
 
       let lineContent = `|${toKebabCase(name)}|${escapeCharacter(
-        description || ''
+        description || '',
       )}|${escapeCharacter(bindingsTmpl(bindings)) || '-'}|`;
 
       if (hasVersion) {

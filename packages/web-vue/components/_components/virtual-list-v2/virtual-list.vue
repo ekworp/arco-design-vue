@@ -144,7 +144,7 @@ export default defineComponent({
     const dataKeys = computed(() =>
       data.value.map((item: any, index) => {
         return (item[itemKey.value] ?? index) as string | number;
-      })
+      }),
     );
 
     const {

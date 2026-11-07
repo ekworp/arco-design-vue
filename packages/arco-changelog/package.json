@@ -20,7 +20,7 @@
   },
   "lint-staged": {
     "*.{js,ts,jsx,tsx}": [
-      "eslint --fix",
+      "pnpm -w exec oxlint --fix",
       "prettier --write"
     ]
   },
@@ -28,19 +28,11 @@
     "@types/fs-extra": "^9.0.13",
     "@types/inquirer": "^7.3.3",
     "@types/nunjucks": "^3.2.6",
-    "@typescript-eslint/eslint-plugin": "^4.33.0",
-    "@typescript-eslint/parser": "^4.33.0",
-    "eslint": "^7.32.0",
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-config-prettier": "^8.10.0",
-    "eslint-import-resolver-typescript": "^2.7.1",
-    "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-prettier": "^3.4.1",
-    "prettier": "^2.8.8",
+    "prettier": "^3.9.10",
     "ts-node": "^10.9.2"
   },
   "dependencies": {
-    "axios": "^0.21.4",
+    "axios": "^1.20.0",
     "chalk": "^4.1.2",
     "commander": "^7.2.0",
     "comment-parser": "^1.4.1",

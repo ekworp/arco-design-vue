@@ -3,18 +3,17 @@
     "outDir": "dist",
     "declaration": true,
     "module": "CommonJS",
-    "target": "ES2015",
+    "target": "ES2020",
     "moduleResolution": "node",
+    "paths": {
+      "vite": ["node_modules/vite/dist/node/index.d.ts"]
+    },
     "baseUrl": ".",
     "strict": true,
     "isolatedModules": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "lib": [
-      "ES2020"
-    ]
+    "lib": ["ES2020"]
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }

@@ -1,4 +1,3 @@
-import type { Plugin } from 'vite';
 import { transformChangelog, transformDemo, transformMain } from './markdown';
 import { getDescriptor } from './descriptor';
 import {
@@ -9,15 +8,25 @@ import {
 } from './utils';
 import marked from './marked';
 
-export default function vueMdPlugin(): Plugin {
-  let vuePlugin: Plugin | undefined;
+function callHook(plugin: any, hook: string, context: any, ...args: any[]) {
+  const handler = plugin?.[hook];
+  if (typeof handler === 'function') {
+    return handler.call(context, ...args);
+  }
+  return handler?.handler?.call(context, ...args);
+}
+
+export default function vueMdPlugin(): any {
+  let vuePlugin: any;
 
   return {
     name: 'vite:arco-vue-docs',
     enforce: 'pre',
-    configResolved(resolvedConfig) {
+    configResolved(resolvedConfig: any) {
       // 获取vue插件，在hotUpload中使用
-      vuePlugin = resolvedConfig.plugins.find((p) => p.name === 'vite:vue');
+      vuePlugin = resolvedConfig.plugins.find(
+        (p: any) => p.name === 'vite:vue',
+      );
     },
     resolveId(id: string) {
       // 遇到虚拟md模块，直接返回id
@@ -26,7 +35,7 @@ export default function vueMdPlugin(): Plugin {
       }
       return null;
     },
-    load(id) {
+    load(id: string) {
       // 遇到虚拟md模块，直接返回缓存的内容
       if (isVirtualModule(id)) {
         return getDescriptor(id);
@@ -41,7 +50,7 @@ export default function vueMdPlugin(): Plugin {
         return this.error('Not found plugin [vite:vue]');
       }
       if (isVirtualModule(id)) {
-        return vuePlugin.transform?.call(this, code, getVueId(id));
+        return callHook(vuePlugin, 'transform', this, code, getVueId(id));
       }
 
       const tokens = marked.lexer(code);
@@ -55,10 +64,10 @@ export default function vueMdPlugin(): Plugin {
         ? transformDemo(tokens, id, frontMatter)
         : transformMain(tokens, id, frontMatter);
 
-      return vuePlugin.transform?.call(this, vueCode, getVueId(id));
+      return callHook(vuePlugin, 'transform', this, vueCode, getVueId(id));
     },
 
-    async handleHotUpdate(ctx) {
+    async handleHotUpdate(ctx: any) {
       if (!ctx.file.endsWith('.md') || !vuePlugin) {
         return undefined;
       }
@@ -88,7 +97,7 @@ export default function vueMdPlugin(): Plugin {
 
         const mods = moduleGraph.getModulesByFile(virtualPath);
         if (mods) {
-          const ret = await vuePlugin.handleHotUpdate?.({
+          const ret = await callHook(vuePlugin, 'handleHotUpdate', this, {
             file: getVueId(virtualPath),
             timestamp,
             modules: [...mods],
@@ -101,7 +110,7 @@ export default function vueMdPlugin(): Plugin {
       }
 
       // reload the content component
-      const ret = await vuePlugin.handleHotUpdate?.({
+      const ret = await callHook(vuePlugin, 'handleHotUpdate', this, {
         file: getVueId(file),
         timestamp,
         modules,

@@ -7,7 +7,6 @@ const config: InlineConfig = {
     outDir: 'dist/css',
     emptyOutDir: false,
     minify: false,
-    brotliSize: false,
     rollupOptions: {
       external: /less$/,
       output: [

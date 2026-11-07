@@ -2,7 +2,7 @@ import { InlineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import svgLoader from 'vite-svg-loader';
-import { terser } from 'rollup-plugin-terser';
+import terser from '@rollup/plugin-terser';
 
 export default ({ name }: { name: string }): InlineConfig => {
   return {
@@ -13,7 +13,6 @@ export default ({ name }: { name: string }): InlineConfig => {
       emptyOutDir: false,
       sourcemap: true,
       minify: false,
-      brotliSize: false,
       rollupOptions: {
         external: [
           'vue',
@@ -23,6 +22,7 @@ export default ({ name }: { name: string }): InlineConfig => {
         output: [
           {
             format: 'umd',
+            name,
             entryFileNames: `index.js`,
             sourcemap: true,
             globals: {
@@ -33,6 +33,7 @@ export default ({ name }: { name: string }): InlineConfig => {
           },
           {
             format: 'umd',
+            name,
             entryFileNames: `index.min.js`,
             sourcemap: true,
             globals: {

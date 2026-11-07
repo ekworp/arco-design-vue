@@ -43,7 +43,7 @@ export const openCodeSandbox = (content: string) => {
           devDependencies: {
             '@vue/cli-plugin-babel': '^5.0',
             '@vue/cli-service': '^5.0',
-            '@vue/compiler-sfc': '^3.2.0',
+            '@vue/compiler-sfc': '^3.5.45',
           },
         },
       },

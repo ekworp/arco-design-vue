@@ -3,9 +3,18 @@
     "sourceMap": true,
     "outDir": "dist",
     "module": "CommonJS",
-    "target": "ES2015",
+    "target": "ES2020",
     "allowJs": true,
     "moduleResolution": "node",
+    "paths": {
+      "vite": ["node_modules/vite/dist/node/index.d.ts"],
+      "@vitejs/plugin-vue": [
+        "node_modules/@vitejs/plugin-vue/dist/index.d.mts"
+      ],
+      "@vitejs/plugin-vue-jsx": [
+        "node_modules/@vitejs/plugin-vue-jsx/dist/index.d.mts"
+      ]
+    },
     "baseUrl": ".",
     "strict": true,
     "resolveJsonModule": true,

@@ -10,8 +10,10 @@ import './navbar.css';
 interface NavBarOptions {
   version?: string;
   lang?: string;
-  handleLanguageChange?: (lang: string) => void;
+  handleLanguageChange?: (lang?: string) => void;
 }
+
+const NavbarThemeProvider = (Navbar as any).NavbarThemeProvider;
 
 const ReactApp = ({
   lang = 'zh-CN',
@@ -20,16 +22,16 @@ const ReactApp = ({
 }: NavBarOptions) => {
   return (
     <ConfigProvider prefixCls={'arco-react'}>
-      <Navbar.NavbarThemeProvider>
+      <NavbarThemeProvider>
         <Navbar
           lang={lang}
           onChangeLanguage={handleLanguageChange}
           algoliaTag="vue"
           defaultVersion={version}
-          onChangeTheme={(theme: string) => {
+          onChangeTheme={(theme?: string) => {
             document
               .querySelector('#react-root')
-              ?.setAttribute('arco-theme', theme);
+              ?.setAttribute('arco-theme', theme ?? '');
           }}
           loginHref={`/common/login?redirectUrl=${window.location.href}`}
           hideRtl
@@ -41,7 +43,7 @@ const ReactApp = ({
             { version, link: '/vue' },
           ]}
         />
-      </Navbar.NavbarThemeProvider>
+      </NavbarThemeProvider>
     </ConfigProvider>
   );
 };
@@ -49,7 +51,7 @@ const ReactApp = ({
 const renderNavBar = (options?: NavBarOptions) => {
   ReactDOM.render(
     <ReactApp {...(options ?? {})} />,
-    document.getElementById('react-root')
+    document.getElementById('react-root'),
   );
 };
 export default renderNavBar;

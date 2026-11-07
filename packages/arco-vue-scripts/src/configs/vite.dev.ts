@@ -10,7 +10,6 @@ export default defineConfig({
     outDir: 'es',
     emptyOutDir: true,
     minify: false,
-    brotliSize: false,
     rollupOptions: {
       output: {
         entryFileNames: '[name].js',

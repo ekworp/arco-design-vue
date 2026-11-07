@@ -17,14 +17,16 @@
   "devDependencies": {
     "@arco-design/web-react": "^2.65.0",
     "@arco-materials/site-navbar-new": "^1.2.13",
-    "@svgr/core": "^5.5.0",
-    "esbuild": "^0.12.29",
+    "@docsearch/react": "3.0.0-alpha.42",
+    "@svgr/core": "^8.1.0",
+    "@svgr/plugin-jsx": "^8.1.0",
+    "esbuild": "^0.28.2",
     "less": "^4.2.2",
     "prettier": "^3.9.10",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-transition-group": "^4.4.5",
-    "vite": "^2.9.18"
+    "vite": "^6.4.5"
   },
   "installConfig": {
     "hoistingLimits": "workspaces"

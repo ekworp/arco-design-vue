@@ -13,7 +13,7 @@ module.exports = {
     '@babel/plugin-transform-runtime',
     '@babel/plugin-transform-modules-commonjs',
     '@babel/plugin-syntax-dynamic-import',
-    '@babel/plugin-proposal-class-properties',
+    '@babel/plugin-transform-class-properties',
     '@vue/babel-plugin-jsx',
   ],
 };

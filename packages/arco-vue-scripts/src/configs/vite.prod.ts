@@ -14,7 +14,6 @@ const config: InlineConfig = {
     outDir: 'es',
     emptyOutDir: false,
     minify: false,
-    brotliSize: false,
     rollupOptions: {
       input: ['components/index.ts', 'components/icon/index.ts', ...langFiles],
       output: [

@@ -23,7 +23,7 @@ const program = new Command();
 
 const packageContent = fs.readFileSync(
   path.resolve(__dirname, '../package.json'),
-  'utf8'
+  'utf8',
 );
 const packageData: any = JSON.parse(packageContent);
 
@@ -35,7 +35,7 @@ program
 program
   .command('docgen')
   .description(
-    'generate document of component. e.g. arco-scripts-vue docgen --components menu,affix,button'
+    'generate document of component. e.g. arco-scripts-vue docgen --components menu,affix,button',
   )
   .option('-i, --input <filename>', 'specified input file')
   .option('-c, --components <names>', 'component name(s) joined by comma(,)')
@@ -63,10 +63,10 @@ program
   .description('emit .d.ts files for vue files.')
   .option(
     '-o, --outDir <direname>',
-    'Specify an output folder for all emitted files'
+    'Specify an output folder for all emitted files',
   )
-  .action((files, options) => {
-    dtsgen(files, options);
+  .action(async (files, options) => {
+    await dtsgen(files, options);
   });
 
 program
@@ -142,7 +142,7 @@ program
 program
   .command('changelog')
   .description(
-    'Obtain and organize changelog information through the git repository.'
+    'Obtain and organize changelog information through the git repository.',
   )
   .action(async () => {
     await changelog();

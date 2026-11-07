@@ -1,7 +1,7 @@
 import { InlineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
-import { terser } from 'rollup-plugin-terser';
+import terser from '@rollup/plugin-terser';
 
 export default (type: 'component' | 'icon'): InlineConfig => {
   const entry =
@@ -19,12 +19,12 @@ export default (type: 'component' | 'icon'): InlineConfig => {
       emptyOutDir: false,
       sourcemap: true,
       minify: false,
-      brotliSize: false,
       rollupOptions: {
         external: 'vue',
         output: [
           {
             format: 'umd',
+            name,
             entryFileNames: `${entryFileName}.js`,
             globals: {
               vue: 'Vue',
@@ -32,6 +32,7 @@ export default (type: 'component' | 'icon'): InlineConfig => {
           },
           {
             format: 'umd',
+            name,
             entryFileNames: `${entryFileName}.min.js`,
             globals: {
               vue: 'Vue',

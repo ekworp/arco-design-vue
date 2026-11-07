@@ -33,18 +33,18 @@ export const packageJSONContent = JSON.stringify(
       serve: 'vite preview',
     },
     dependencies: {
-      'vue': '^3.2.0',
+      'vue': '^3.5.45',
       'dayjs': '^1.0',
       '@arco-design/web-vue': 'latest',
     },
     devDependencies: {
-      'vite': '^2.9.8',
-      '@vitejs/plugin-vue': '^2.3.2',
-      '@vitejs/plugin-vue-jsx': '^1.3.10',
+      'vite': '^6.4.5',
+      '@vitejs/plugin-vue': '^6.0.0',
+      '@vitejs/plugin-vue-jsx': '^5.1.6',
     },
   },
   null,
-  2
+  2,
 );
 
 export const openStackblitz = (content: string) => {
@@ -65,6 +65,6 @@ export const openStackblitz = (content: string) => {
     },
     {
       openFile: 'src/App.vue',
-    }
+    },
   );
 };

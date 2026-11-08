@@ -1,7 +1,7 @@
 /* eslint-disable no-await-in-loop */
 import path from 'path';
 import fs from 'fs-extra';
-import glob from 'glob';
+import { globSync } from 'glob';
 import { ComponentDoc, parse as parseComponent } from 'vue-docgen-api';
 import chalk from 'chalk';
 import print from './utils/print';
@@ -24,7 +24,7 @@ type ApiType = 'component' | 'interface';
 const getApiTmpl = (
   componentDoc: ComponentDocType,
   type: ApiType,
-  lang: string
+  lang: string,
 ) => {
   const componentDocList = Array.isArray(componentDoc)
     ? componentDoc
@@ -61,12 +61,12 @@ const getApiTmpl = (
 
     const propsTmpl = getTmpl(
       'Props',
-      templates.props(props || [], { isInterface: type === 'interface' }, lang)
+      templates.props(props || [], { isInterface: type === 'interface' }, lang),
     );
     const eventsTmpl = getTmpl('Events', templates.events(events || [], lang));
     const methodsTmpl = getTmpl(
       'Methods',
-      templates.methods(methods || [], lang)
+      templates.methods(methods || [], lang),
     );
     const slotsTmpl = getTmpl('Slots', templates.slots(slots || [], lang));
 
@@ -134,7 +134,7 @@ const docgen = async ({
     }
   } else {
     // 读取组件列表
-    const templates = glob.sync(TEMPLATE_GLOB, { absolute: true });
+    const templates = globSync(TEMPLATE_GLOB, { absolute: true });
     if (components && components.length > 0) {
       const reg = new RegExp(components.join('|'));
       for (const template of templates) {
@@ -194,7 +194,7 @@ const docgen = async ({
 
     enResult = enResult.replace(
       /```yaml\n.+?```\n/s,
-      (match) => `${match}\n*Auto translate by google.*\n`
+      (match) => `${match}\n*Auto translate by google.*\n`,
     );
 
     zhResult = await parseMaterial(zhResult, {
@@ -225,8 +225,8 @@ const docgen = async ({
 
         print.success(
           `${chalk.black.bgGreen.bold(
-            `Generate README of component ${componentName} Success!`
-          )}`
+            `Generate README of component ${componentName} Success!`,
+          )}`,
         );
       }
     } catch (err) {

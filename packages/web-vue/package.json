@@ -74,7 +74,7 @@
     "@vue/babel-plugin-jsx": "^1.4.0",
     "@vue/test-utils": "^2.5.1",
     "core-js": "^3.45.1",
-    "glob": "^7.2.3",
+    "glob": "^14.0.4",
     "prettier": "^3.9.10",
     "regenerator-runtime": "^0.14.1",
     "stylelint": "^13.13.1",

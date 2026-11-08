@@ -1,6 +1,4 @@
-import marked from 'marked';
-// @ts-ignore
-import { cleanUrl, escape } from 'marked/src/helpers';
+import { marked, Tokens } from 'marked';
 import yaml from 'js-yaml';
 import Prism from 'prismjs';
 import loadLanguages from 'prismjs/components/index';
@@ -10,6 +8,33 @@ import { FileImportToken, I18nDescriptionToken } from './interface';
 
 const languages = ['shell', 'js', 'ts', 'jsx', 'tsx', 'less', 'diff'];
 loadLanguages(languages);
+
+const escape = (value: string) =>
+  value.replace(/[&<>"']/g, (character) => {
+    const entities: Record<string, string> = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;',
+    };
+    return entities[character];
+  });
+
+const cleanUrl = (href: string) => {
+  try {
+    const url = decodeURIComponent(href)
+      .split('')
+      .filter((character) => character.charCodeAt(0) > 0x20)
+      .join('');
+    if (/^(javascript|vbscript|data):/i.test(url)) {
+      return null;
+    }
+  } catch {
+    return null;
+  }
+  return href;
+};
 
 const frontMatter = {
   name: 'frontMatter',
@@ -69,7 +94,7 @@ const i18nDescription = {
 
     if (match) {
       const text = match[2].trim();
-      const content = marked(text);
+      const content = marked.parse(text);
       return {
         type: 'i18nDescription',
         raw: match[0],
@@ -85,103 +110,91 @@ const i18nDescription = {
   },
 };
 
-marked.setOptions({
-  highlight(
-    code: string,
-    lang: string,
-    callback?: (error: any, code?: string) => void
-  ): string | void {
-    if (lang === 'vue') {
-      const { descriptor, errors } = parse(code);
-      const { script, styles } = descriptor;
-
-      let htmlContent = code;
-      const hasStyle = Boolean(styles.length > 0);
-      if (script?.content) {
-        htmlContent = htmlContent.replace(script.content, '$script$');
-      }
-      if (hasStyle) {
-        styles.forEach((style, index) => {
-          htmlContent = htmlContent.replace(style.content, `$style-${index}$`);
-        });
-      }
-
-      let highlighted = Prism.highlight(
-        htmlContent,
-        Prism.languages.html,
-        'html'
-      );
-      if (script?.content) {
-        const lang = script.lang ?? 'js';
-        const highlightedScript = Prism.highlight(
-          script.content,
-          Prism.languages[lang],
-          lang
-        );
-        highlighted = highlighted.replace('$script$', highlightedScript);
-      }
-      if (hasStyle) {
-        styles.forEach((style, index) => {
-          const lang = style.lang ?? 'css';
-          const highlightedStyle = Prism.highlight(
-            style.content,
-            Prism.languages[lang],
-            lang
-          );
-          highlighted = highlighted.replace(
-            `$style-${index}$`,
-            highlightedStyle
-          );
-        });
-      }
-
-      return highlighted;
-    }
-    if (languages.includes(lang)) {
-      return Prism.highlight(code, Prism.languages[lang], lang);
-    }
-    return code;
-  },
-});
-
 marked.use({
   breaks: true,
   xhtml: true,
   renderer: {
-    heading(text: string, level: number, raw: string) {
-      if (level === 2) {
-        const anchor = raw.replace(/\s+/g, '-');
-        return `<anchor-head level="${level}" href="${anchor}">${text}</anchor-head>`;
+    heading(this: any, token: Tokens.Heading) {
+      const text = this.parser.parseInline(token.tokens);
+      if (token.depth === 2) {
+        const anchor = token.text.replace(/\s+/g, '-');
+        return `<anchor-head level="${token.depth}" href="${anchor}">${text}</anchor-head>`;
       }
-      return `<h${level} id="${raw}">${text}</h${level}>`;
+      return `<h${token.depth} id="${token.text}">${text}</h${token.depth}>`;
     },
-    link(this: any, href, title, text) {
-      href = cleanUrl(this.options.sanitize, this.options.baseUrl, href);
+    link(this: any, token: Tokens.Link) {
+      const href = cleanUrl(token.href);
+      const text = this.parser.parseInline(token.tokens);
       if (href === null) {
         return text;
       }
       let out = `<a class="link" href="${escape(href)}"`;
-      if (title) {
-        if (/_blank/.test(title)) {
+      if (token.title) {
+        if (/_blank/.test(token.title)) {
           out += ` target="_blank"`;
-          title = title.replace('_blank', '').trim();
+          const title = token.title.replace('_blank', '').trim();
           if (title) {
-            out += ` title="${title}"`;
+            out += ` title="${escape(title)}"`;
           }
         } else {
-          out += ` title="${title}"`;
+          out += ` title="${escape(token.title)}"`;
         }
       }
-      out += `>${text}</a>`;
-      return out;
+      return `${out}>${text}</a>`;
     },
-    code(this: any, code, infostring) {
-      const lang = (infostring || '').match(/\S*/)?.[0];
-      if (this.options.highlight) {
-        const out = this.options.highlight(code, lang);
-        if (out != null && out !== code) {
-          code = out;
+    code(token: Tokens.Code) {
+      const lang = (token.lang || '').match(/\S*/)?.[0];
+      let code = token.text;
+      if (lang === 'vue') {
+        const { descriptor } = parse(code);
+        const { script, styles } = descriptor;
+
+        let htmlContent = code;
+        const hasStyle = Boolean(styles.length > 0);
+        if (script?.content) {
+          htmlContent = htmlContent.replace(script.content, '$script$');
         }
+        if (hasStyle) {
+          styles.forEach((style, index) => {
+            htmlContent = htmlContent.replace(
+              style.content,
+              `$style-${index}$`,
+            );
+          });
+        }
+
+        let highlighted = Prism.highlight(
+          htmlContent,
+          Prism.languages.html,
+          'html',
+        );
+        if (script?.content) {
+          const lang = script.lang ?? 'js';
+          const highlightedScript = Prism.highlight(
+            script.content,
+            Prism.languages[lang],
+            lang,
+          );
+          highlighted = highlighted.replace('$script$', highlightedScript);
+        }
+        if (hasStyle) {
+          styles.forEach((style, index) => {
+            const lang = style.lang ?? 'css';
+            const highlightedStyle = Prism.highlight(
+              style.content,
+              Prism.languages[lang],
+              lang,
+            );
+            highlighted = highlighted.replace(
+              `$style-${index}$`,
+              highlightedStyle,
+            );
+          });
+        }
+
+        code = highlighted;
+      } else if (lang && languages.includes(lang)) {
+        code = Prism.highlight(code, Prism.languages[lang], lang);
       }
       code = code.replace(/{{|}}/g, (string) => {
         if (string === '{{') {
@@ -195,24 +208,26 @@ marked.use({
         return `<pre class="code-content"><code>${code}</code></pre>\n`;
       }
 
-      return `<pre class="code-content"><code class="${this.options.langPrefix}lang">${code}</code></pre>\n`;
+      return `<pre class="code-content"><code class="language-${lang}">${code}</code></pre>\n`;
     },
-    table(header: string, body: string) {
+    table(this: any, token: Tokens.Table) {
+      const header = token.header
+        .map((cell) => this.parser.parseInline(cell.tokens))
+        .join('');
+      const body = token.rows
+        .map(
+          (row) =>
+            `<a-tr>${row
+              .map((cell) => this.parser.parseInline(cell.tokens))
+              .join('')}</a-tr>`,
+        )
+        .join('');
       return `<a-table class="component-api-table">
   <colgroup>
     <col style="min-width: 120px"/>
   </colgroup>
   <a-thead>${header}</a-thead><a-tbody>${body}</a-tbody>
 </a-table>`;
-    },
-    tablerow(content: string): string {
-      return `<a-tr>${content}</a-tr>`;
-    },
-    tablecell(content: string, { header, align }): string {
-      if (header) {
-        return `<a-th>${content}</a-th>`;
-      }
-      return `<a-td>${content}</a-td>`;
     },
   },
   // @ts-ignore @types/marked版本过低导致

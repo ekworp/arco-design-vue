@@ -1,5 +1,5 @@
 import path from 'path';
-import glob from 'glob';
+import { globSync } from 'glob';
 import { mount, config } from '@vue/test-utils';
 import ArcoVue from '../components';
 import ArcoVueIcon from '../components/icon';
@@ -33,7 +33,7 @@ config.global.plugins = [ArcoVue, ArcoVueIcon];
 
 function demoTest(component: string) {
   describe(`<${component}> demo:`, () => {
-    const files = glob.sync(`components/${component}/__demo__/*.md`);
+    const files = globSync(`components/${component}/__demo__/*.md`);
     const table = files.map((filename) => [
       path.basename(filename, '.md'),
       filename,

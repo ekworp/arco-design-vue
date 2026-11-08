@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs-extra';
-import glob from 'glob';
+import { globSync } from 'glob';
 import less from 'less';
 import { build } from 'vite';
 import getConfig from '../../configs/vite.material.prod';
@@ -26,7 +26,7 @@ async function buildLess() {
         } else if (result && result.css) {
           fs.writeFileSync('dist/css/index.css', result.css);
         }
-      }
+      },
     );
   }
 }
@@ -37,7 +37,7 @@ async function buildStyle() {
   // 编译less文件入口
   await build(styleConfig);
   // 复制less文件到dist/css目录下
-  const lessFiles = glob.sync('src/style/**/*.less');
+  const lessFiles = globSync('src/style/**/*.less');
   for (const file of lessFiles) {
     const filename = file.match(/src\/style\/(.*)/)?.[1];
     fs.copyFileSync(file, `dist/css/${filename}`);

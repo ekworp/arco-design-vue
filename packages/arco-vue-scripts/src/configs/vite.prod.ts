@@ -1,11 +1,11 @@
 import { InlineConfig } from 'vite';
-import glob from 'glob';
+import { globSync } from 'glob';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import external from '../plugins/vite-plugin-external';
 import vueExportHelper from '../plugins/vite-plugin-vue-export-helper';
 
-const langFiles = glob.sync('components/locale/lang/*.ts');
+const langFiles = globSync('components/locale/lang/*.ts');
 
 const config: InlineConfig = {
   mode: 'production',

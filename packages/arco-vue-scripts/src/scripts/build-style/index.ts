@@ -2,7 +2,7 @@ import path from 'path';
 import fs from 'fs-extra';
 import less from 'less';
 import CleanCSS from 'clean-css';
-import glob from 'glob';
+import { globSync } from 'glob';
 import { build } from 'vite';
 // import ora from 'ora';
 import paths from '../../utils/paths';
@@ -16,7 +16,7 @@ const run = async ({ material }: { material: boolean }) => {
   }
 
   // 拷贝less文件到目标文件，index.less编译生成index.css
-  const files = glob.sync('**/*.{less,js}', {
+  const files = globSync('**/*.{less,js}', {
     cwd: paths.resolvePath('components'),
   });
 
@@ -45,15 +45,15 @@ const run = async ({ material }: { material: boolean }) => {
             const cssFilename = filename.replace('.less', '.css');
             fs.writeFileSync(
               paths.resolvePath(`es/${cssFilename}`),
-              result.css
+              result.css,
             );
             fs.writeFileSync(
               paths.resolvePath(`lib/${cssFilename}`),
-              result.css
+              result.css,
             );
             console.log(`${filename} build success`);
           }
-        }
+        },
       );
     }
   }
@@ -73,25 +73,25 @@ const run = async ({ material }: { material: boolean }) => {
 
   fs.writeFileSync(
     paths.resolvePath(material ? 'dist/index.less' : 'dist/arco.less'),
-    "@import '../es/index.less';\n\n"
+    "@import '../es/index.less';\n\n",
   );
 
   fs.writeFileSync(
     paths.resolvePath(material ? 'dist/index.css' : 'dist/arco.css'),
-    result.css
+    result.css,
   );
 
   const compress = new CleanCSS().minify(result.css);
 
   fs.writeFileSync(
     paths.resolvePath(material ? 'dist/index.min.css' : 'dist/arco.min.css'),
-    compress.styles
+    compress.styles,
   );
 
   console.log(`target build success`);
 
   // 构建style/index.ts
-  const indexFiles = glob.sync('components/**/style/index.ts', {
+  const indexFiles = globSync('components/**/style/index.ts', {
     cwd: paths.root,
   });
 

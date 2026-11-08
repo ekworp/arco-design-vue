@@ -1,11 +1,11 @@
 import path from 'path';
 import fs from 'fs-extra';
-import glob from 'glob';
+import { globSync } from 'glob';
 import paths from '../../utils/paths';
 
 const lessgen = () => {
   let lessContent = `@import './style/index.less';\n@import './trigger/style/index.less';\n`;
-  const lessFiles = glob.sync('**/style/index.less', {
+  const lessFiles = globSync('**/style/index.less', {
     cwd: paths.components,
     ignore: ['style/index.less', 'trigger/style/index.less'],
   });

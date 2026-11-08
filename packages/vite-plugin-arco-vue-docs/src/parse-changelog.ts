@@ -43,7 +43,7 @@ export const parseChangelog = (tokens: Token[]) => {
     } else if (item.type === 'list') {
       for (const extraItem of item.items) {
         // @ts-ignore
-        data.extra.push(marked(extraItem.text));
+        data.extra.push(marked.parse(extraItem.text));
       }
     } else if (item.type === 'heading' && item.depth === 3) {
       const content = {
@@ -57,7 +57,7 @@ export const parseChangelog = (tokens: Token[]) => {
           // @ts-ignore
           for (const item of listToken.items) {
             // @ts-ignore
-            content.list.push(marked(item.text));
+            content.list.push(marked.parse(item.text));
           }
           i = j;
           break;

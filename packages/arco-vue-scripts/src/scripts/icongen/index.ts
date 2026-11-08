@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs-extra';
-import glob from 'glob';
+import { globSync } from 'glob';
 import { optimize } from 'svgo';
 import { JSDOM } from 'jsdom';
 import paths from '../../utils/paths';
@@ -44,7 +44,7 @@ function getSVGData(): IconData[] {
       type: key,
       list: [],
     };
-    const files = glob.sync(`${toKebabCase(key)}/**/*.svg`, {
+    const files = globSync(`${toKebabCase(key)}/**/*.svg`, {
       cwd: paths.iconSvgs,
       absolute: true,
     });
@@ -90,7 +90,7 @@ async function buildIconComponent(data: IconData[]) {
               } else {
                 console.log(`Build ${item.componentName} Success!`);
               }
-            }
+            },
           );
         }
       }
@@ -109,7 +109,7 @@ async function buildIconComponent(data: IconData[]) {
           } else {
             console.log(`Build ${item.componentName} Success!`);
           }
-        }
+        },
       );
     }
   }
@@ -125,7 +125,7 @@ function buildIndex(data: IconData[]) {
       components.push(item.componentName);
       imports.push(`import ${item.componentName} from './${item.name}';`);
       exports.push(
-        `export { default as ${item.componentName} } from './${item.name}';`
+        `export { default as ${item.componentName} } from './${item.name}';`,
       );
     }
   }
@@ -142,7 +142,7 @@ function buildIndex(data: IconData[]) {
       } else {
         console.log('Build ArcoVueIcon Success!');
       }
-    }
+    },
   );
 
   fs.outputFile(
@@ -154,7 +154,7 @@ function buildIndex(data: IconData[]) {
       } else {
         console.log('Build Index Success!');
       }
-    }
+    },
   );
 
   fs.outputFile(
@@ -166,7 +166,7 @@ function buildIndex(data: IconData[]) {
       } else {
         console.log('Build JSON Success!');
       }
-    }
+    },
   );
 }
 
@@ -175,7 +175,7 @@ function buildType(data: IconData[]) {
   for (const iconData of data) {
     for (const item of iconData.list) {
       exports.push(
-        `${item.componentName}: typeof import('@arco-design/web-vue/es/icon')['${item.componentName}'];`
+        `${item.componentName}: typeof import('@arco-design/web-vue/es/icon')['${item.componentName}'];`,
       );
     }
   }
@@ -191,7 +191,7 @@ function buildType(data: IconData[]) {
       } else {
         console.log('Build Type Success!');
       }
-    }
+    },
   );
 }
 

@@ -6,7 +6,7 @@ import {
   ScriptTarget,
   SourceFile,
 } from 'ts-morph';
-import glob from 'glob';
+import { globSync } from 'glob';
 import { parse } from '@vue/compiler-sfc';
 
 export async function build(input: string, options?: { outDir?: string }) {
@@ -41,7 +41,7 @@ export async function build(input: string, options?: { outDir?: string }) {
       outDir: path.resolve(root, options.outDir),
     });
   }
-  const files = glob.sync(input, {
+  const files = globSync(input, {
     ignore: /components\/icon/.test(input)
       ? ['**/__test__/*', '**/__demo__/*']
       : ['**/__test__/*', '**/__demo__/*', 'components/icon/**/*'],
@@ -52,7 +52,7 @@ export async function build(input: string, options?: { outDir?: string }) {
     files.map(async (file) => {
       const content = await fs.promises.readFile(
         path.resolve(root, file),
-        'utf8'
+        'utf8',
       );
       if (file.endsWith('.vue')) {
         const sfc = parse(content);
@@ -66,7 +66,7 @@ export async function build(input: string, options?: { outDir?: string }) {
           }
           const sourceFile = project.createSourceFile(
             path.relative(root, file).replace('.vue', isTSX ? '.tsx' : '.ts'),
-            scriptContent
+            scriptContent,
           );
           if (sourceFile) {
             removeVueSpecifier(sourceFile);
@@ -79,14 +79,14 @@ export async function build(input: string, options?: { outDir?: string }) {
           content,
           {
             overwrite: true,
-          }
+          },
         );
         if (sourceFile) {
           removeVueSpecifier(sourceFile);
           sourceFiles.push(sourceFile);
         }
       }
-    })
+    }),
   );
 
   try {
@@ -106,9 +106,9 @@ export async function build(input: string, options?: { outDir?: string }) {
             await fs.writeFile(filepath, outputFile.getText(), 'utf8');
             // eslint-disable-next-line no-console
             console.log(`Emitted ${filepath}`);
-          })
+          }),
         );
-      })
+      }),
     );
   } catch {}
 }

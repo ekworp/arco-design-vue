@@ -29,7 +29,6 @@
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
-    "@types/js-yaml": "^4.0.9",
     "@types/node": "^22.1.0",
     "@types/prismjs": "^1.26.6",
     "prettier": "^3.9.10"

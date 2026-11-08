@@ -1,6 +1,6 @@
-import { OptimizeOptions } from 'svgo';
+import { Config } from 'svgo';
 
-const options: OptimizeOptions = {
+const options: Config = {
   plugins: [
     {
       name: 'preset-default',
@@ -11,7 +11,7 @@ const options: OptimizeOptions = {
       },
     },
     'removeStyleElement',
-    'removeScriptElement',
+    'removeScripts',
     'removeDimensions',
     {
       name: 'removeAttrs',
@@ -39,7 +39,7 @@ const options: OptimizeOptions = {
         ],
       },
     },
-  ],
+  ] as any,
 };
 
 export default options;

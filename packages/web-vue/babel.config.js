@@ -4,15 +4,14 @@ module.exports = {
     [
       '@babel/preset-typescript',
       {
-        allExtensions: true,
-        isTSX: true,
+        ignoreExtensions: true,
       },
     ],
   ],
   plugins: [
     '@babel/plugin-transform-runtime',
     '@babel/plugin-transform-modules-commonjs',
-    '@babel/plugin-syntax-dynamic-import',
+    '@babel/plugin-syntax-jsx',
     '@babel/plugin-transform-class-properties',
     '@vue/babel-plugin-jsx',
   ],

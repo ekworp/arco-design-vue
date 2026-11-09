@@ -21,7 +21,7 @@ export async function build(input: string, options?: { outDir?: string }) {
       emitDeclarationOnly: true,
       strict: true,
       target: ScriptTarget.ES2015,
-      moduleResolution: ModuleResolutionKind.NodeJs,
+      moduleResolution: ModuleResolutionKind.Bundler,
       isolatedModules: true,
       esModuleInterop: true,
       skipLibCheck: true,

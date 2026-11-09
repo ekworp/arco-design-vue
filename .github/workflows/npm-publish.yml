@@ -38,4 +38,5 @@ jobs:
         run: pnpm --filter @ekworp/arco-design-vue build
 
       - name: Publish to npm
-        run: pnpm --filter @ekworp/arco-design-vue publish --no-git-checks --access public --provenance
+        run: npm publish --access public --provenance
+        working-directory: packages/web-vue

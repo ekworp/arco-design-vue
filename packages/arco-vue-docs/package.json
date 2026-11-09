@@ -24,7 +24,7 @@
   "devDependencies": {
     "@arco-design/arco-vue-docs-navbar": "workspace:*",
     "@arco-design/arco-vue-scripts": "workspace:*",
-    "@arco-design/web-vue": "workspace:*",
+    "@ekworp/arco-design-vue": "workspace:*",
     "@stackblitz/sdk": "^1.11.1",
     "@types/nprogress": "^0.2.3",
     "axios": "^1.20.0",

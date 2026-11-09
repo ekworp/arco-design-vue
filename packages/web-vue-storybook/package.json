@@ -10,7 +10,7 @@
     "build-storybook": "storybook build"
   },
   "devDependencies": {
-    "@arco-design/web-vue": "workspace:*",
+    "@ekworp/arco-design-vue": "workspace:*",
     "@vitejs/plugin-vue": "^6.0.0",
     "@vitejs/plugin-vue-jsx": "^5.1.6",
     "@storybook/addon-links": "^10.6.6",

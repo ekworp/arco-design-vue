@@ -109,7 +109,7 @@ importers:
       '@arco-design/arco-vue-scripts':
         specifier: workspace:*
         version: link:../arco-vue-scripts
-      '@arco-design/web-vue':
+      '@ekworp/arco-design-vue':
         specifier: workspace:*
         version: link:../web-vue
       '@stackblitz/sdk':
@@ -475,7 +475,7 @@ importers:
 
   packages/web-vue-storybook:
     devDependencies:
-      '@arco-design/web-vue':
+      '@ekworp/arco-design-vue':
         specifier: workspace:*
         version: link:../web-vue
       '@storybook/addon-links':

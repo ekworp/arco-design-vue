@@ -2,7 +2,7 @@
 changelog: true
 ```
 
-## Unreleased - 2026-11-09
+## 2.59.1 - 2026-11-09
 
 ### Changed
 

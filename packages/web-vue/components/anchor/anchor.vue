@@ -27,7 +27,7 @@ import {
   ref,
   watch,
 } from 'vue';
-import computeScrollIntoView from 'compute-scroll-into-view';
+import { compute as computeScrollIntoView } from 'compute-scroll-into-view';
 import { getPrefixCls } from '../_utils/global-config';
 import { isNumber, isWindow } from '../_utils/is';
 import { getElement, off, on } from '../_utils/dom';

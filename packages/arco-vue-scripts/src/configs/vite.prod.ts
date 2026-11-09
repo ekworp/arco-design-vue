@@ -33,6 +33,9 @@ const config: InlineConfig = {
         },
       ],
     },
+    lib: {
+      entry: 'components/index.ts',
+    },
   },
   // @ts-ignore vite内部类型错误
   plugins: [external(), vue(), vueJsx(), vueExportHelper()],

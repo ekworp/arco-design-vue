@@ -17,7 +17,8 @@
     "es",
     "lib",
     "dist",
-    "json"
+    "json",
+    "CHANGELOG.md"
   ],
   "repository": {
     "type": "git",

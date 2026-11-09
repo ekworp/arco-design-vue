@@ -2,6 +2,26 @@
 changelog: true
 ```
 
+## Unreleased - 2026-11-09
+
+### Changed
+
+- Forked package configuration as `@ekworp/arco-design-vue`.
+- Upgraded Vite to 8, Storybook to 10, and TypeScript to 7.
+- Upgraded Vue I18n to 11.4.18 and Vue Router to 5.4.0.
+- Upgraded `compute-scroll-into-view` to 3.1.1 and `scroll-into-view-if-needed` to 3.1.0.
+- Upgraded jsdom, vite-svg-loader, Stylelint, Commitlint, and CLI tooling.
+
+### Fixed
+
+- Adapted Anchor to the named `compute` export from `compute-scroll-into-view` 3.x.
+- Corrected Vite plugin dependency classification.
+
+### Validation
+
+- Component and documentation site builds passed.
+- Anchor/Form unit tests and TypeScript checks passed.
+
 ## 2.59.0
 
 `2026-10-20`

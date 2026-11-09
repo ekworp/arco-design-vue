@@ -45,7 +45,6 @@ export default (type: 'component' | 'icon'): InlineConfig => {
       // 开启lib模式
       lib: {
         entry,
-        formats: ['umd'],
         name,
       },
     },

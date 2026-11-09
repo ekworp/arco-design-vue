@@ -33,11 +33,6 @@ const config: InlineConfig = {
         },
       ],
     },
-    // 开启lib模式，但不使用下面配置
-    lib: {
-      entry: 'components/index.ts',
-      formats: ['es', 'cjs'],
-    },
   },
   // @ts-ignore vite内部类型错误
   plugins: [external(), vue(), vueJsx(), vueExportHelper()],

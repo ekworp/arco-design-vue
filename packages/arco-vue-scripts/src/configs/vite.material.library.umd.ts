@@ -49,7 +49,6 @@ export default ({ name }: { name: string }): InlineConfig => {
       // 开启lib模式
       lib: {
         entry: 'components/components.ts',
-        formats: ['umd'],
         name,
       },
     },

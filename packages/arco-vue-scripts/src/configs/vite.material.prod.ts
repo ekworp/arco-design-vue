@@ -50,7 +50,6 @@ const getConfig = ({
       },
       lib: {
         entry: input,
-        formats: ['es'],
       },
     },
     plugins: [vue(), vueJsx(), svgLoader()],

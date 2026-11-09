@@ -19,7 +19,6 @@ const config: InlineConfig = {
     },
     lib: {
       entry: 'src/style/index.ts',
-      formats: ['es'],
     },
   },
 };

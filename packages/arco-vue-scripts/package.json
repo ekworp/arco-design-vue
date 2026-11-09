@@ -60,7 +60,7 @@
     "moment": "^2.31.0",
     "nunjucks": "^3.2.4",
     "ora": "^10.0.0",
-    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-terser": "^1.0.2",
     "svgo": "^4.1.0",
     "rollup": "^4.68.0",
     "ts-morph": "^28.0.0",

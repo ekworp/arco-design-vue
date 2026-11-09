@@ -326,9 +326,6 @@ importers:
 
   packages/vite-plugin-arco-vue-docs:
     dependencies:
-      '@vitejs/plugin-vue':
-        specifier: ^6.0.0
-        version: 6.0.10(vite@8.3.6(@types/node@22.13.10)(esbuild@0.28.2)(jiti@2.7.0)(less@4.9.1(supports-color@10.2.2))(terser@5.39.0)(yaml@2.9.1))(vue@3.5.45(typescript@7.0.2))
       '@vue/compiler-sfc':
         specifier: ^3.5.45
         version: 3.5.45
@@ -344,9 +341,6 @@ importers:
       prismjs:
         specifier: ^1.29.0
         version: 1.30.0
-      vite:
-        specifier: ^8.3.6
-        version: 8.3.6(@types/node@22.13.10)(esbuild@0.28.2)(jiti@2.7.0)(less@4.9.1(supports-color@10.2.2))(terser@5.39.0)(yaml@2.9.1)
     devDependencies:
       '@types/fs-extra':
         specifier: ^11.0.4
@@ -357,9 +351,15 @@ importers:
       '@types/prismjs':
         specifier: ^1.26.6
         version: 1.26.6
+      '@vitejs/plugin-vue':
+        specifier: ^6.0.0
+        version: 6.0.10(vite@8.3.6(@types/node@22.13.10)(esbuild@0.28.2)(jiti@2.7.0)(less@4.9.1(supports-color@10.2.2))(terser@5.39.0)(yaml@2.9.1))(vue@3.5.45(typescript@7.0.2))
       prettier:
         specifier: ^3.9.10
         version: 3.9.10
+      vite:
+        specifier: ^8.3.6
+        version: 8.3.6(@types/node@22.13.10)(esbuild@0.28.2)(jiti@2.7.0)(less@4.9.1(supports-color@10.2.2))(terser@5.39.0)(yaml@2.9.1)
 
   packages/web-vue:
     dependencies:

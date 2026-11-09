@@ -6,7 +6,7 @@ import external from '../plugins/vite-plugin-external';
 export default defineConfig({
   mode: 'development',
   build: {
-    target: 'modules',
+    target: 'es2020',
     outDir: 'es',
     emptyOutDir: true,
     minify: false,

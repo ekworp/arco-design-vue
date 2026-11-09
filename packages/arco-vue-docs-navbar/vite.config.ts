@@ -14,7 +14,7 @@ export default defineConfig({
     },
   },
   build: {
-    target: 'modules',
+    target: 'es2020',
     outDir: 'dist',
     emptyOutDir: true,
     lib: {
@@ -31,6 +31,7 @@ export default defineConfig({
   plugins: [
     {
       name: 'docsearch-compat',
+      enforce: 'pre',
       resolveId(id) {
         if (id === '@docsearch/react/dist/esm/AlgoliaLogo') {
           return '\0docsearch-algolia-logo';

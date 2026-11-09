@@ -4,7 +4,7 @@ import cssjs from '../plugins/vite-plugin-cssjs';
 const config: InlineConfig = {
   mode: 'production',
   build: {
-    target: 'modules',
+    target: 'es2020',
     outDir: 'es',
     emptyOutDir: false,
     minify: false,

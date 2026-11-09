@@ -3,7 +3,7 @@ import { InlineConfig } from 'vite';
 const config: InlineConfig = {
   mode: 'production',
   build: {
-    target: 'modules',
+    target: 'es2020',
     outDir: 'dist/css',
     emptyOutDir: false,
     minify: false,

@@ -1,8 +1,17 @@
 import * as bt from '@babel/types';
 import { Documentation } from 'vue-docgen-api';
-import getDoclets from 'vue-docgen-api/dist/utils/getDoclets';
-import getProperties from 'vue-docgen-api/dist/script-handlers/utils/getProperties';
-import getDocblock from 'vue-docgen-api/dist/utils/getDocblock';
+import path from 'path';
+
+const vueDocgenDist = path.dirname(require.resolve('vue-docgen-api'));
+const getDoclets = require(
+  path.join(vueDocgenDist, 'utils/getDoclets')
+).default;
+const getProperties = require(
+  path.join(vueDocgenDist, 'script-handlers/utils/getProperties')
+).default;
+const getDocblock = require(
+  path.join(vueDocgenDist, 'utils/getDocblock')
+).default;
 
 export function slotTagHandler(documentation: Documentation, path: any) {
   if (bt.isObjectExpression(path.node)) {

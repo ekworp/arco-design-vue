@@ -10,7 +10,7 @@ const langFiles = globSync('components/locale/lang/*.ts');
 const config: InlineConfig = {
   mode: 'production',
   build: {
-    target: 'modules',
+    target: 'es2020',
     outDir: 'es',
     emptyOutDir: false,
     minify: false,

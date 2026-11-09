@@ -14,7 +14,7 @@ const getConfig = ({
   return {
     mode: 'production',
     build: {
-      target: 'modules',
+      target: 'es2020',
       outDir: 'dist',
       emptyOutDir: true,
       minify: false,

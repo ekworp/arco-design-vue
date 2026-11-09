@@ -2,6 +2,9 @@
   "name": "arco-design-vue-monorepo",
   "description": "Arco Design Vue 2.0 Monorepo",
   "private": true,
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "prepare": "husky",
     "init": "pnpm -F @arco-design/arco-changelog -F @arco-design/vite-plugin-arco-vue-docs -F @arco-design/arco-vue-scripts run build && pnpm i && pnpm -F @arco-design/web-vue run init",

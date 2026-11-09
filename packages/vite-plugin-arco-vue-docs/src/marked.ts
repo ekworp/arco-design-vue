@@ -120,7 +120,7 @@ marked.use({
         const anchor = token.text.replace(/\s+/g, '-');
         return `<anchor-head level="${token.depth}" href="${anchor}">${text}</anchor-head>`;
       }
-      return `<h${token.depth} id="${token.text}">${text}</h${token.depth}>`;
+      return `<h${token.depth} id="${escape(token.text)}">${text}</h${token.depth}>`;
     },
     link(this: any, token: Tokens.Link) {
       const href = cleanUrl(token.href);

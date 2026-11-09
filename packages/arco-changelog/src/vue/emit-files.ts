@@ -1,5 +1,5 @@
 import path from 'path';
-import { Changelog, EmitFile } from '../interface';
+import { Changelog, EmitFile } from '../interface.js';
 
 export const emitFiles = (changelog: Changelog): EmitFile[] => {
   const allCN: Record<string, any> = {};
@@ -19,12 +19,12 @@ export const emitFiles = (changelog: Changelog): EmitFile[] => {
   const emits: EmitFile[] = [
     {
       file: 'CHANGELOG.zh-CN.md',
-      template: path.resolve(__dirname, 'template.zh-CN.njk'),
+      template: path.resolve(new URL('.', import.meta.url).pathname, 'template.zh-CN.njk'),
       data: { version: changelog.version, date: changelog.date, ...allCN },
     },
     {
       file: 'CHANGELOG.md',
-      template: path.resolve(__dirname, 'template.en-US.njk'),
+      template: path.resolve(new URL('.', import.meta.url).pathname, 'template.en-US.njk'),
       data: { version: changelog.version, date: changelog.date, ...addEN },
     },
   ];
@@ -70,7 +70,7 @@ const getComponentEmits = (changelog: Record<string, any>, zh?: boolean) => {
     emits.push({
       file,
       template: path.resolve(
-        __dirname,
+        new URL('.', import.meta.url).pathname,
         `template.${zh ? 'zh-CN' : 'en-US'}.njk`
       ),
       data: {

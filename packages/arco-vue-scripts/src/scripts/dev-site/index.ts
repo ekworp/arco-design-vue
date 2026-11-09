@@ -1,5 +1,5 @@
 import { createServer } from 'vite';
-import config from '../../configs/vite.site.dev';
+import config from '../../configs/vite.site.dev.js';
 
 async function run() {
   const server = await createServer(config);

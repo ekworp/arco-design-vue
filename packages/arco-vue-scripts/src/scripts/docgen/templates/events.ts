@@ -1,5 +1,5 @@
 import { EventDescriptor, Tag } from 'vue-docgen-api';
-import { escapeCharacter, toKebabCase } from '../utils';
+import { escapeCharacter, toKebabCase } from '../utils/index.js';
 
 const propertiesTmpl = (properties: EventDescriptor['properties']): string => {
   return (properties || [])

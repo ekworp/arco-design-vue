@@ -1,8 +1,8 @@
 import path from 'path';
 import fs from 'fs-extra';
-import { ChangelogConfig } from './interface';
-import { getEmitFiles } from './default/emit-files';
-import vueConfig from './vue/vue.config';
+import { ChangelogConfig } from './interface.js';
+import { getEmitFiles } from './default/emit-files.js';
+import vueConfig from './vue/vue.config.js';
 
 export const typeDict = {
   feature: 'New feature',

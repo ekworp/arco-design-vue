@@ -3,10 +3,10 @@ import fs from 'fs-extra';
 import { globSync } from 'glob';
 import less from 'less';
 import { build } from 'vite';
-import getConfig from '../../configs/vite.material.prod';
-import styleConfig from '../../configs/vite.material.style';
-import { getUserConfig } from '../../utils/config';
-import { getPackage } from '../../utils/get-package';
+import getConfig from '../../configs/vite.material.prod.js';
+import styleConfig from '../../configs/vite.material.style.js';
+import { getUserConfig } from '../../utils/config.js';
+import { getPackage } from '../../utils/get-package.js';
 
 async function buildLess() {
   try {

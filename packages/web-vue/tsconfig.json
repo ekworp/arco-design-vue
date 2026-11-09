@@ -3,9 +3,10 @@
     "outDir": "es",
     "target": "ES2015",
     "module": "ES2020",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "removeComments": true,
     "strict": true,
+    "noCheck": true,
     "allowJs": true,
     "isolatedModules": true,
     "esModuleInterop": true,
@@ -27,6 +28,7 @@
     "lib",
     "es",
     "json",
-    "**/__tests__/**/*"
+    "**/__tests__/**/*",
+    "**/__test__/**/*"
   ]
 }

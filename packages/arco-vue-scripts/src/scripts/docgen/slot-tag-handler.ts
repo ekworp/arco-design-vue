@@ -1,7 +1,9 @@
 import * as bt from '@babel/types';
 import { Documentation } from 'vue-docgen-api';
 import path from 'path';
+import { createRequire } from 'module';
 
+const require = createRequire(import.meta.url);
 const vueDocgenDist = path.dirname(require.resolve('vue-docgen-api'));
 const getDoclets = require(
   path.join(vueDocgenDist, 'utils/getDoclets')

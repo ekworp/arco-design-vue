@@ -1,6 +1,6 @@
 import { marked, Tokens } from 'marked';
-import { invertKeyValues } from './utils/invert';
-import { ChangelogData } from './interface';
+import { invertKeyValues } from './utils/invert.js';
+import { ChangelogData } from './interface.js';
 
 export const getChangelogList = (
   content: string,

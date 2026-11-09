@@ -1,10 +1,13 @@
 import path from 'path';
 import fs from 'fs-extra';
+import { fileURLToPath } from 'url';
+
+const currentDir = path.dirname(fileURLToPath(import.meta.url));
 
 export const run = ({ gitlab }) => {
   if (gitlab) {
     fs.copySync(
-      path.resolve(__dirname, '.gitlab'),
+      path.resolve(currentDir, '.gitlab'),
       path.resolve(process.cwd(), '.gitlab'),
       {
         overwrite: true,
@@ -12,7 +15,7 @@ export const run = ({ gitlab }) => {
     );
   } else {
     fs.copySync(
-      path.resolve(__dirname, '.github'),
+      path.resolve(currentDir, '.github'),
       path.resolve(process.cwd(), '.github'),
       {
         overwrite: true,

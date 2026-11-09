@@ -5,9 +5,9 @@ import CleanCSS from 'clean-css';
 import { globSync } from 'glob';
 import { build } from 'vite';
 // import ora from 'ora';
-import paths from '../../utils/paths';
-import config from '../../configs/vite.prod.style';
-import lessgen from '../lessgen';
+import paths from '../../utils/paths.js';
+import config from '../../configs/vite.prod.style.js';
+import lessgen from '../lessgen/index.js';
 
 const run = async ({ material }: { material: boolean }) => {
   // 更新index.less文件

@@ -2,8 +2,8 @@ import { InlineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import svgLoader from 'vite-svg-loader';
-import external from '../plugins/vite-plugin-external';
-import vueExportHelper from '../plugins/vite-plugin-vue-export-helper';
+import external from '../plugins/vite-plugin-external/index.js';
+import vueExportHelper from '../plugins/vite-plugin-vue-export-helper/index.js';
 
 const config: InlineConfig = {
   mode: 'production',

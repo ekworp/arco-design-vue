@@ -1,7 +1,7 @@
 import { defineConfig, InlineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
-import external from '../plugins/vite-plugin-external';
+import external from '../plugins/vite-plugin-external/index.js';
 
 export default defineConfig({
   mode: 'development',

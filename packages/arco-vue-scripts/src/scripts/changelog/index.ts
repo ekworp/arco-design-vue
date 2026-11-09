@@ -1,16 +1,21 @@
 import fs from 'fs-extra';
+import path from 'path';
 import inquirer from 'inquirer';
 import axios from 'axios';
 import moment from 'moment';
-import { configure } from 'nunjucks';
-import { compareVersion, isValidComponent } from './utils';
-import { toKebabCase } from '../../utils/convert-case';
+import nunjucks from 'nunjucks';
+import { fileURLToPath } from 'url';
+import { compareVersion, isValidComponent } from './utils.js';
+import { toKebabCase } from '../../utils/convert-case.js';
 
-const nunjucksEnv = configure(__dirname, {
+const nunjucksEnv = nunjucks.configure(
+  path.dirname(fileURLToPath(import.meta.url)),
+  {
   autoescape: false,
   trimBlocks: true,
   lstripBlocks: true,
-});
+  },
+);
 
 interface Changelog {
   version: string;

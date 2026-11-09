@@ -1,7 +1,7 @@
 import ora from 'ora';
 import chalk from 'chalk';
 import { build, InlineConfig } from 'vite';
-import config from '../../configs/vite.dev';
+import config from '../../configs/vite.dev.js';
 
 const run = async () => {
   const spinner = ora();

@@ -2,8 +2,8 @@ import { InlineConfig } from 'vite';
 import { globSync } from 'glob';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
-import external from '../plugins/vite-plugin-external';
-import vueExportHelper from '../plugins/vite-plugin-vue-export-helper';
+import external from '../plugins/vite-plugin-external/index.js';
+import vueExportHelper from '../plugins/vite-plugin-vue-export-helper/index.js';
 
 const langFiles = globSync('components/locale/lang/*.ts');
 

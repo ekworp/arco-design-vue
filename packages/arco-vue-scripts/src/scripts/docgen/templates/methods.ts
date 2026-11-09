@@ -1,5 +1,5 @@
 import { MethodDescriptor, ParamTag, ParamType } from 'vue-docgen-api';
-import { escapeCharacter } from '../utils';
+import { escapeCharacter } from '../utils/index.js';
 
 const paramsTmpl = (params: MethodDescriptor['params']): string => {
   return (params || [])

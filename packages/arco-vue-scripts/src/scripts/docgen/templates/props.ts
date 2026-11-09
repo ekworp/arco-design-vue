@@ -5,7 +5,7 @@ import {
   unquote,
   trimStr,
   cleanStr,
-} from '../utils';
+} from '../utils/index.js';
 
 const tmpl = (
   props: PropDescriptor[],

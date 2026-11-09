@@ -4,12 +4,12 @@ import fs from 'fs-extra';
 import { globSync } from 'glob';
 import { ComponentDoc, parse as parseComponent } from 'vue-docgen-api';
 import chalk from 'chalk';
-import print from './utils/print';
-import templates from './templates';
-import parseInterface from './utils/parse-interface';
-import { getTemplate, toKebabCase } from './utils';
-import parseMaterial from './utils/parse-material';
-import { slotTagHandler } from './slot-tag-handler';
+import print from './utils/print.js';
+import templates from './templates/index.js';
+import parseInterface from './utils/parse-interface.js';
+import { getTemplate, toKebabCase } from './utils/index.js';
+import parseMaterial from './utils/parse-material.js';
+import { slotTagHandler } from './slot-tag-handler.js';
 
 const MD_TEMPLATE = 'TEMPLATE.md';
 const MD_TARGET = 'README.zh-CN.md';

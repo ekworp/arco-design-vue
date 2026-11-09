@@ -1,28 +1,30 @@
 #!/usr/bin/env node
 
 import path from 'path';
+import { fileURLToPath } from 'url';
 import fs from 'fs-extra';
 import { Command } from 'commander';
-import icongen from './scripts/icongen';
-import lessgen from './scripts/lessgen';
-import docgen from './scripts/docgen';
-import dtsgen from './scripts/dtsgen';
-import devComponent from './scripts/dev-component';
-import devSite from './scripts/dev-site';
-import buildComponent from './scripts/build-component';
-import buildStyle from './scripts/build-style';
-import buildSite from './scripts/build-site';
-import buildMaterial from './scripts/build-material';
-import buildMaterialLibrary from './scripts/build-material-library';
-import test from './scripts/test';
-// import screentshotTest from './scripts/test/screentshot';
-import changelog from './scripts/changelog';
-import jsongen from './scripts/jsongen';
+import icongen from './scripts/icongen/index.js';
+import lessgen from './scripts/lessgen/index.js';
+import docgen from './scripts/docgen/index.js';
+import dtsgen from './scripts/dtsgen/index.js';
+import devComponent from './scripts/dev-component/index.js';
+import devSite from './scripts/dev-site/index.js';
+import buildComponent from './scripts/build-component/index.js';
+import buildStyle from './scripts/build-style/index.js';
+import buildSite from './scripts/build-site/index.js';
+import buildMaterial from './scripts/build-material/index.js';
+import buildMaterialLibrary from './scripts/build-material-library/index.js';
+import test from './scripts/test/index.js';
+// import screentshotTest from './scripts/test/screentshot.js';
+import changelog from './scripts/changelog/index.js';
+import jsongen from './scripts/jsongen/index.js';
 
 const program = new Command();
+const currentDir = path.dirname(fileURLToPath(import.meta.url));
 
 const packageContent = fs.readFileSync(
-  path.resolve(__dirname, '../package.json'),
+  path.resolve(currentDir, '../package.json'),
   'utf8',
 );
 const packageData: any = JSON.parse(packageContent);

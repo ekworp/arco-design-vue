@@ -3,16 +3,16 @@ import fs from 'fs-extra';
 import { globSync } from 'glob';
 import { optimize } from 'svgo';
 import { JSDOM } from 'jsdom';
-import paths from '../../utils/paths';
-import { toKebabCase, toPascalCase } from '../../utils/convert-case';
-import svgoConfig from './svgo.config';
+import paths from '../../utils/paths.js';
+import { toKebabCase, toPascalCase } from '../../utils/convert-case.js';
+import svgoConfig from './svgo.config.js';
 import {
   getArcoVueIcon,
   getComponentIndex,
   getIconVue,
   getIndex,
   getType,
-} from './vue-template';
+} from './vue-template.js';
 
 interface IconData {
   title: string;

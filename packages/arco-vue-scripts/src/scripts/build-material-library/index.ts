@@ -1,9 +1,9 @@
 import fs from 'fs-extra';
 import path from 'path';
 import { build } from 'vite';
-import config from '../../configs/vite.material.library';
-import getUmdConfig from '../../configs/vite.material.library.umd';
-import { getPackage } from '../../utils/get-package';
+import config from '../../configs/vite.material.library.js';
+import getUmdConfig from '../../configs/vite.material.library.umd.js';
+import { getPackage } from '../../utils/get-package.js';
 
 async function run() {
   await fs.emptyDir(path.resolve(process.cwd(), 'es'));

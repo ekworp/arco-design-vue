@@ -1,5 +1,5 @@
 import path from 'path';
-import { Changelog, EmitFile } from '../interface';
+import { Changelog, EmitFile } from '../interface.js';
 
 export const getEmitFiles = (config?: any) => {
   return (changelog: Changelog): EmitFile[] => {
@@ -16,12 +16,12 @@ export const getEmitFiles = (config?: any) => {
     return [
       {
         file: config?.filename?.zh ?? 'CHANGELOG.zh-CN.md',
-        template: path.resolve(__dirname, 'template.zh-CN.njk'),
+        template: path.resolve(new URL('.', import.meta.url).pathname, 'template.zh-CN.njk'),
         data: { version: changelog.version, date: changelog.date, ...allCN },
       },
       {
         file: config?.filename?.en ?? 'CHANGELOG.md',
-        template: path.resolve(__dirname, 'template.en-US.njk'),
+        template: path.resolve(new URL('.', import.meta.url).pathname, 'template.en-US.njk'),
         data: { version: changelog.version, date: changelog.date, ...addEN },
       },
     ];

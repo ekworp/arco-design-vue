@@ -6,9 +6,9 @@ import {
   ParamTag,
   parse as parseComponent,
 } from 'vue-docgen-api';
-import { toKebabCase } from '../../utils/convert-case';
-import { slotTagHandler } from '../docgen/slot-tag-handler';
-import { getPackage } from '../../utils/get-package';
+import { toKebabCase } from '../../utils/convert-case.js';
+import { slotTagHandler } from '../docgen/slot-tag-handler.js';
+import { getPackage } from '../../utils/get-package.js';
 
 const getComponentsFromTemplates = async () => {
   const templates = await fg('components/**/TEMPLATE.md');

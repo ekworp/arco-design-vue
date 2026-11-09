@@ -3,13 +3,14 @@
 import { Command } from 'commander';
 import fs from 'fs-extra';
 import path from 'path';
-import { changelog } from './index';
-import { run } from './copy-github';
+import { fileURLToPath } from 'url';
+import { changelog } from './index.js';
+import { run } from './copy-github.js';
 
 const program = new Command();
 
 const packageContent = fs.readFileSync(
-  path.resolve(__dirname, '../package.json'),
+  path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../package.json'),
   'utf8'
 );
 const packageData: any = JSON.parse(packageContent);

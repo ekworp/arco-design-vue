@@ -2,13 +2,13 @@ import fs from 'fs-extra';
 import inquirer from 'inquirer';
 import axios from 'axios';
 import moment from 'moment';
-import { configure } from 'nunjucks';
-import { getConfig } from './config';
-import { getPackage } from './utils/config';
-import { Changelog, EmitFile } from './interface';
-import { getChangelogList } from './changelog';
+import nunjucks from 'nunjucks';
+import { getConfig } from './config.js';
+import { getPackage } from './utils/config.js';
+import { Changelog, EmitFile } from './interface.js';
+import { getChangelogList } from './changelog.js';
 
-const nunjucksEnv = configure(__dirname, {
+const nunjucksEnv = nunjucks.configure(new URL('.', import.meta.url).pathname, {
   autoescape: false,
   trimBlocks: true,
   lstripBlocks: true,

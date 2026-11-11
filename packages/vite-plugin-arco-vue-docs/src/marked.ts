@@ -212,13 +212,19 @@ marked.use({
     },
     table(this: any, token: Tokens.Table) {
       const header = token.header
-        .map((cell) => this.parser.parseInline(cell.tokens))
+        .map(
+          (cell) =>
+            `<a-th>${this.parser.parseInline(cell.tokens)}</a-th>`,
+        )
         .join('');
       const body = token.rows
         .map(
           (row) =>
             `<a-tr>${row
-              .map((cell) => this.parser.parseInline(cell.tokens))
+              .map(
+                (cell) =>
+                  `<a-td>${this.parser.parseInline(cell.tokens)}</a-td>`,
+              )
               .join('')}</a-tr>`,
         )
         .join('');

@@ -2,6 +2,28 @@
 changelog: true
 ```
 
+## 2.59.2
+
+`2026-11-11`
+
+### 🐛 问题修复
+
+- 修复 Rolldown 构建导致组件和图标入口文件为空的问题。
+
+## 2.59.1
+
+`2026-11-09`
+
+### 💎 功能优化
+
+- 维护个人 npm 发布包 `@ekworp/arco-design-vue`。
+- 升级 Vite、Storybook、TypeScript 及 Vue 生态相关依赖。
+- 升级 `compute-scroll-into-view` 至 3.1.1，并适配其命名导出。
+
+### 🐛 问题修复
+
+- 修正 Vite 文档插件中 Vite 及 Vue 插件的依赖归类。
+
 ## 2.59.0
 
 `2026-10-20`

@@ -2,6 +2,12 @@
 changelog: true
 ```
 
+## 2.59.2 - 2026-11-11
+
+### Fixed
+
+- Preserved Rollup/Rolldown library entry points so `es/index.js` and `es/icon/index.js` contain the expected exports.
+
 ## 2.59.1 - 2026-11-09
 
 ### Changed

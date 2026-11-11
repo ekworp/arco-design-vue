@@ -32,6 +32,40 @@ changelog: true
 
 `2026-10-20`
 
+### Fork maintenance changes - 2026-11-09
+
+#### Changed
+
+- Upgraded Vite to 8 and switched to Rolldown for builds.
+- Upgraded Storybook to 10.
+- Upgraded TypeScript to 7.
+- Upgraded Vue I18n to 11.4.18.
+- Upgraded Vue Router to 5.4.0.
+- Upgraded `compute-scroll-into-view` to 3.1.1.
+- Upgraded `scroll-into-view-if-needed` to 3.1.0.
+- Upgraded `jsdom` to 27.4.0.
+- Upgraded `vite-svg-loader` to 5.1.3.
+- Upgraded Stylelint, Commitlint, and CLI tooling dependencies.
+- Upgraded Node.js type definitions and the Terser Rollup plugin.
+
+#### Fixed
+
+- Adapted to `compute-scroll-into-view` 3.x by using its named `compute` export.
+- Corrected Vite and Vue plugin dependency classification in the Vite docs plugin.
+- Removed legacy configuration dependencies incompatible with Stylelint 18.
+
+#### Validation
+
+- Web-vue component build passed.
+- Documentation site build passed.
+- Anchor and Form unit tests and TypeScript checks passed.
+- npm package dry-run passed.
+
+#### Known issues
+
+- Some demo snapshot tests are affected by Markdown dynamic import compatibility under Vite 8.
+- The latest versions of `@arco-materials/site-navbar-new` and `@arco-materials/site-utils` still declare outdated React 16 peer dependencies.
+
 ### 🆕 Feature
 
 - **calendar:** Align Calendar with key React capabilities (page date control, header type/operations, disabled date, custom renderers, week mode), and fix select-header today sync/highlight behavior. ([#3651](https://github.com/arco-design/arco-design-vue/pull/3651))

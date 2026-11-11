@@ -17,7 +17,7 @@ const getComponentsFromTemplates = async () => {
   await Promise.all(
     templates.map(async (item) => {
       const dirname = path.dirname(item);
-      const source = await fs.readFile(item, 'utf8');
+      const source = String(await fs.readFile(item, 'utf8'));
       const matches = Array.from(source.matchAll(/%%API\((.+?)\)%%/g));
       matches.forEach((match) => {
         if (match[1]) {

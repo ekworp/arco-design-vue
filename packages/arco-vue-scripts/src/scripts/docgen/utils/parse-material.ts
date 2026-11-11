@@ -56,7 +56,7 @@ export default async function parseMaterial(
   if (match && match[1]) {
     const filename = path.resolve(dirname, match[1]);
     const demoDirname = path.dirname(filename);
-    const indexContent = await fs.readFile(filename, 'utf8');
+    const indexContent = String(await fs.readFile(filename, 'utf8'));
     const { materialData, imports } = getMaterialData(indexContent);
     let result = `${getMaterialMdContent(materialData)}\n`;
 

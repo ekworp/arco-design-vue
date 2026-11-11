@@ -246,7 +246,7 @@ const appendChangelog = async (emit: EmitInfo) => {
 
   try {
     await fs.access(filename);
-    const origin = await fs.readFile(filename, 'utf-8');
+    const origin = String(await fs.readFile(filename, 'utf-8'));
     const match = origin.match(/^(```yaml\n.*?\n```\n\n)?(.*)$/s);
     if (match) {
       await fs.writeFile(filename, `${match[1] ?? ''}${content}\n${match[2]}`);
@@ -281,7 +281,7 @@ const run = async () => {
   let version = '2.0.0';
   if (fs.existsSync('package.json')) {
     try {
-      const packageJson = await fs.readFile('package.json', 'utf8');
+      const packageJson = String(await fs.readFile('package.json', 'utf8'));
       const packageData = JSON.parse(packageJson);
       if (packageData.version) {
         version = packageData.version;

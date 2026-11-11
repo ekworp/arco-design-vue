@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -25,7 +25,7 @@ jobs:
           version: 11
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 22
           registry-url: https://registry.npmjs.org
@@ -33,6 +33,11 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Build workspace tooling
+        run: |
+          pnpm --filter @arco-design/vite-plugin-arco-vue-docs build
+          pnpm --filter @arco-design/arco-vue-scripts build
 
       - name: Build package
         run: pnpm --filter @ekworp/arco-design-vue build

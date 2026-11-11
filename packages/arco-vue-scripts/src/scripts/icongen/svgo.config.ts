@@ -4,11 +4,6 @@ const options: Config = {
   plugins: [
     {
       name: 'preset-default',
-      params: {
-        overrides: {
-          removeViewBox: false,
-        },
-      },
     },
     'removeStyleElement',
     'removeScripts',

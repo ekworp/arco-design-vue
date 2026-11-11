@@ -1,6 +1,6 @@
 {
   "name": "@ekworp/arco-design-vue",
-  "version": "2.59.1",
+  "version": "2.59.2",
   "description": "Arco Design Vue 2.0: A Vue.js 3 UI Library",
   "keywords": [
     "arco",
@@ -51,7 +51,7 @@
     "test:update": "vitest run --coverage -u",
     "test:screenshot": "arco-vue-scripts test:screenshot -o ./__screenshots__/",
     "changelog": "arco-vue-scripts changelog",
-    "lint-staged": "npx lint-staged"
+    "lint-staged": "pnpm exec lint-staged"
   },
   "peerDependencies": {
     "vue": ">=3.1.0"

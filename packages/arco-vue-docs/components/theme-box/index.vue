@@ -157,8 +157,8 @@ import {
   Input,
   Empty,
   Link,
-} from '@arco-design/web-vue';
-import { IconSkin, IconLink } from '@arco-design/web-vue/es/icon';
+} from '@ekworp/arco-design-vue';
+import { IconSkin, IconLink } from '@ekworp/arco-design-vue/es/icon';
 import axios from 'axios';
 import { ThemeData } from './interface';
 import {

@@ -39,6 +39,9 @@ jobs:
           pnpm --filter @arco-design/vite-plugin-arco-vue-docs build
           pnpm --filter @arco-design/arco-vue-scripts build
 
+      - name: Generate package sources
+        run: pnpm --filter @ekworp/arco-design-vue run icongen
+
       - name: Build package
         run: pnpm --filter @ekworp/arco-design-vue build
 

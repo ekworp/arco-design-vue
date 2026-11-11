@@ -16,7 +16,7 @@
 *.java            text
 *.js              text
 *.jsx             text
-*.less            text
+*.less            text eol=lf
 *.ls              text
 *.map             text -diff
 *.od              text
@@ -33,7 +33,9 @@
 *.sql             text
 *.styl            text
 *.tag             text
-*.ts              text
+*.ts              text eol=lf
+*.yml             text eol=lf
+*.yaml            text eol=lf
 *.xml             text
 *.xhtml           text diff=html
 *.md              text eol=lf

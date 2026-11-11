@@ -8,6 +8,7 @@ const lessgen = () => {
   const lessFiles = globSync('**/style/index.less', {
     cwd: paths.components,
     ignore: ['style/index.less', 'trigger/style/index.less'],
+    posix: true,
   });
   lessFiles.forEach((value) => {
     lessContent += `@import './${value}';\n`;

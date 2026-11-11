@@ -2,6 +2,13 @@
 changelog: true
 ```
 
+## 2.59.3 - 2026-11-11
+
+### Fixed
+
+- Fixed API Markdown tables rendering without `a-th` and `a-td` elements, which caused table content to run together and prevented table styles from applying.
+- Updated the documentation site to import components and icons from `@ekworp/arco-design-vue` instead of the original package name.
+
 ## 2.59.2 - 2026-11-11
 
 ### Fixed

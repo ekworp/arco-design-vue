@@ -1,5 +1,20 @@
-import { InlineConfig } from 'vite';
+import { InlineConfig, Plugin } from 'vite';
 import cssjs from '../plugins/vite-plugin-cssjs/index.js';
+
+const preserveStyleImports: Plugin = {
+  name: 'preserve-style-imports',
+  enforce: 'pre',
+  transform(code, id) {
+    if (!id.endsWith('/style/index.ts')) {
+      return;
+    }
+
+    return code.replace(
+      /(import\s+)(['"])([^'"]+\/style)\2/g,
+      '$1$2$3/index.less$2',
+    );
+  },
+};
 
 const config: InlineConfig = {
   mode: 'production',
@@ -24,7 +39,7 @@ const config: InlineConfig = {
       ],
     },
   },
-  plugins: [cssjs()],
+  plugins: [preserveStyleImports, cssjs()],
 };
 
 export default config;

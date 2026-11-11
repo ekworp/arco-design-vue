@@ -2,6 +2,12 @@
 changelog: true
 ```
 
+## 2.59.4 - 2026-11-12
+
+### Fixed
+
+- Preserved shared Less imports in component-level style entry points, including `select-view`, `trigger`, and other dependent component styles.
+
 ## 2.59.3 - 2026-11-11
 
 ### Fixed

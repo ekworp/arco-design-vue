@@ -1,5 +1,5 @@
 import path from 'path';
-import { defineConfig, InlineConfig } from 'vite';
+import { defineConfig, InlineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import vueDocsModule from '@arco-design/vite-plugin-arco-vue-docs';
@@ -9,30 +9,31 @@ import paths from '../utils/paths.js';
 const root = process.cwd();
 const vueDocs = (vueDocsModule as any).default;
 
-const base =
-  process.env.AssetsPublicPath ||
-  'https://lf-arcosite.bytecdn.com/obj/arcosites/arcodesign/vue/';
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '');
+  const base = env.AssetsPublicPath || '/arco-design-vue/';
 
-export default defineConfig({
-  mode: 'production',
-  base,
-  css: {
-    preprocessorOptions: {
-      less: {
-        paths: [paths.resolvePath('../web-vue')],
+  return {
+    mode: 'production',
+    base,
+    css: {
+      preprocessorOptions: {
+        less: {
+          paths: [paths.resolvePath('../web-vue')],
+        },
       },
     },
-  },
-  resolve: {
-    alias: [
-      {
-        find: /^@web-vue\/(.*)/,
-        replacement: path.resolve(root, '../web-vue/$1'),
-      },
-    ],
-  },
-  build: {
-    target: 'es2015',
-  },
-  plugins: [vueDocs(), vue(), vueJsx(), svgLoader({ svgoConfig: {} })],
-}) as InlineConfig;
+    resolve: {
+      alias: [
+        {
+          find: /^@web-vue\/(.*)/,
+          replacement: path.resolve(root, '../web-vue/$1'),
+        },
+      ],
+    },
+    build: {
+      target: 'es2015',
+    },
+    plugins: [vueDocs(), vue(), vueJsx(), svgLoader({ svgoConfig: {} })],
+  } as InlineConfig;
+});

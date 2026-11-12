@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 import nProgress from 'nprogress';
 
 const Start = () => import('./docs/start.zh-CN.md');
@@ -789,7 +789,7 @@ routes.push({ path: '/:pathMatch(.*)*', redirect: '/vue/docs/start' });
 nProgress.configure({ minimum: 0.4, showSpinner: false });
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes,
   scrollBehavior(to, from, savedPosition) {
     // Always scroll to the top

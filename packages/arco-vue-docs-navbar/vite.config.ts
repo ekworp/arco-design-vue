@@ -5,6 +5,21 @@ import svgr from './plugins/rollup-plugin-svgr';
 export default defineConfig({
   mode: 'development',
   css: {
+    postcss: {
+      plugins: [
+        {
+          postcssPlugin: 'normalize-global-css',
+          Once(root: { walkRules: (callback: (rule: { selector: string }) => void) => void }) {
+            root.walkRules((rule) => {
+              rule.selector = rule.selector.replaceAll(
+                /:global\(([^)]+)\)/g,
+                '$1',
+              );
+            });
+          },
+        },
+      ],
+    },
     preprocessorOptions: {
       less: {
         modifyVars: {

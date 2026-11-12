@@ -587,7 +587,7 @@ html.rtl .ac-navbar-search-modal-doc-item-icon svg {
     margin-top: 4px;
   }
 }
-:global(html.rtl) .ac-navbar-global-notice svg {
+html.rtl .ac-navbar-global-notice svg {
   transform: scaleX(-1);
 }
 .ac-navbar-left-panel {
@@ -994,7 +994,7 @@ body[arco-theme='dark'] .ac-navbar-search-input-key {
   justify-content: space-between;
   padding: 0 24px;
 }
-.DocSearch-Footer :global(.DocSearch-Label) {
+.DocSearch-Footer .DocSearch-Label {
   color: var(--color-text-2) !important;
 }
 .DocSearch-Footer svg {

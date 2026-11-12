@@ -1,7 +1,6 @@
-import { createApp } from 'vue';
+import { createApp, defineAsyncComponent } from 'vue';
 import { createI18n } from 'vue-i18n';
-import ArcoVue, { addI18nMessages, useLocale } from '@web-vue/components/index';
-import ArcoVueIcon from '@web-vue/components/icon';
+import { addI18nMessages, useLocale } from '@web-vue/components/locale';
 import enUS from '@web-vue/components/locale/lang/en-us';
 import renderNavBar from '@arco-design/arco-vue-docs-navbar';
 import packages from '@web-vue/package.json';
@@ -19,6 +18,24 @@ import '@web-vue/components/index.less';
 import '@arco-design/arco-vue-docs-navbar/dist/style.css';
 import { getLocalStorage, setLocalStorage } from './utils/local-storage';
 import { checkLogin } from './utils/login';
+
+const iconModules = import.meta.glob('../web-vue/components/icon/*/index.ts');
+
+const toPascalCase = (value: string) =>
+  value
+    .split('-')
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join('');
+
+const registerIcons = (app: ReturnType<typeof createApp>) => {
+  Object.entries(iconModules).forEach(([path, loader]) => {
+    const match = path.match(/\/icon\/([^/]+)\/index\.ts$/);
+    if (!match) return;
+
+    const name = toPascalCase(match[1]);
+    app.component(name, defineAsyncComponent(loader as any));
+  });
+};
 
 let theme = getLocalStorage('arco-theme') ?? '';
 if (!theme) {
@@ -70,10 +87,9 @@ checkLogin().then(() => {
     theme,
     language: lang,
   });
-  app.use(ArcoVue);
-  app.use(ArcoVueIcon);
   app.use(router);
   app.use(i18n);
+  registerIcons(app);
   app.component(CodeBlock.name, CodeBlock);
   app.component(CellDemo.name, CellDemo);
   app.component(CellCode.name, CellCode);

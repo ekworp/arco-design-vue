@@ -41,26 +41,26 @@
 
 # 安装
 
-[npm package](https://www.npmjs.com/package/@arco-design/web-vue)
+[npm package](https://www.npmjs.com/package/@ekworp/arco-design-vue)
 
 ```bash
 // npm
-npm install @arco-design/web-vue
+npm install @ekworp/arco-design-vue
 
 // yarn
-yarn add @arco-design/web-vue
+yarn add @ekworp/arco-design-vue
 
 // pnpm
-pnpm add @arco-design/web-vue
+pnpm add @ekworp/arco-design-vue
 ```
 
 # 例子
 
 ```typescript
 import { createApp } from 'vue'
-import ArcoVue from '@arco-design/web-vue';
+import ArcoVue from '@ekworp/arco-design-vue';
 import App from './App.vue';
-import '@arco-design/web-vue/dist/arco.css';
+import '@ekworp/arco-design-vue/dist/arco.css';
 
 const app = createApp(App);
 app.use(ArcoVue);

@@ -51,6 +51,10 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: [
         {
+          find: '@arco-design/web-vue',
+          replacement: path.resolve(root, '../web-vue'),
+        },
+        {
           find: /^@web-vue\/(.*)/,
           replacement: path.resolve(root, '../web-vue/$1'),
         },
